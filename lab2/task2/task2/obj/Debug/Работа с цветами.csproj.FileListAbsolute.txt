@@ -1,0 +1,49 @@
+F:\Desktop\Работа с цветами\Работа с цветами\bin\Debug\Работа с цветами.exe.config
+F:\Desktop\Работа с цветами\Работа с цветами\bin\Debug\Работа с цветами.exe
+F:\Desktop\Работа с цветами\Работа с цветами\bin\Debug\Работа с цветами.pdb
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа с цветами.csprojAssemblyReference.cache
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа_с_цветами.Form1.resources
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа_с_цветами.Form2.resources
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа_с_цветами.Form3.resources
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа_с_цветами.Form4.resources
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа_с_цветами.Properties.Resources.resources
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа с цветами.csproj.GenerateResource.cache
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа с цветами.csproj.CoreCompileInputs.cache
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа с цветами.exe
+F:\Desktop\Работа с цветами\Работа с цветами\obj\Debug\Работа с цветами.pdb
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe.config
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.pdb
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csprojAssemblyReference.cache
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form1.resources
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form2.resources
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form3.resources
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form4.resources
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Properties.Resources.resources
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.GenerateResource.cache
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.exe
+C:\Users\User\Desktop\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.pdb
+D:\downloads\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe.config
+D:\downloads\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe
+D:\downloads\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.pdb
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csprojAssemblyReference.cache
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form1.resources
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form2.resources
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form3.resources
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form4.resources
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Properties.Resources.resources
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.GenerateResource.cache
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.CoreCompileInputs.cache
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.exe
+D:\downloads\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.pdb
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csprojAssemblyReference.cache
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Form3.resources
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа_с_цветами.Properties.Resources.resources
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.GenerateResource.cache
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.csproj.CoreCompileInputs.cache
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.exe
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\obj\Debug\Работа с цветами.pdb
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe.config
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.exe
+D:\DeskTop\Мехмат\Графика\ComputerGraphics2-master\Работа с цветами\bin\Debug\Работа с цветами.pdb
