@@ -15,6 +15,8 @@ namespace raster_algorithms
         Graphics g;
         Color fillColor;
         Bitmap bmp;
+        Boolean isMouseDown;
+        Point prevPoint;
 
         public Form1()
         {           
@@ -22,8 +24,9 @@ namespace raster_algorithms
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Image = bmp;
             g = Graphics.FromImage(pictureBox1.Image);
-            fillColor = Color.Black;
-
+            fillColor = panel1.BackColor = Color.Blue;
+            isMouseDown = false;
+            prevPoint = Point.Empty;
         }        
 
         private void Button2_Click(object sender, EventArgs e)
@@ -74,14 +77,14 @@ namespace raster_algorithms
                 {
                     Point pAbove = new Point(i, p.Y + 1);
                     Color curC = get_point_color(pAbove);
-                    if (curC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(pAbove)) 
+                    if (curC.ToArgb() != Color.Black.ToArgb() && curC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(pAbove)) 
                         flood_fill(pAbove);
                 }
                 for (int i = leftP.X; i <= rightP.X; ++i)
                 {
                     Point pBelow = new Point(i, p.Y - 1);
                     Color curC = get_point_color(pBelow);
-                    if (curC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(pBelow))
+                    if (curC.ToArgb() != Color.Black.ToArgb() && curC.ToArgb() != fillColor.ToArgb() && pictureBox1.ClientRectangle.Contains(pBelow))
                         flood_fill(pBelow);
                 }
             }
@@ -94,6 +97,38 @@ namespace raster_algorithms
                 Point p = m.Location;
                 flood_fill(p);
             }
+            pictureBox1.Invalidate();
+        }
+
+        private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (!radioButton2.Checked)
+                return;
+            isMouseDown = true;
+            prevPoint = e.Location;
+
+        }
+
+        private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown && prevPoint != Point.Empty)
+            {
+                Pen p = new Pen(Color.Black, 1);
+                g.DrawLine(p, prevPoint, e.Location);
+                prevPoint = e.Location;
+                pictureBox1.Invalidate();
+            }
+        }
+
+        private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            isMouseDown = false;
+            prevPoint = Point.Empty;
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.Transparent);
             pictureBox1.Invalidate();
         }
     }
