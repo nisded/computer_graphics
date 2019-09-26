@@ -17,7 +17,6 @@ namespace raster_algorithms
         Bitmap bmp;
         Boolean isMouseDown;
         Point prevPoint;
-        TextureBrush textureBrush;
 
         Point mouseCoord;
 
@@ -103,7 +102,7 @@ namespace raster_algorithms
                 Point p = m.Location;
                 flood_fill(p);
             }
-            if (radioButton3.Checked)
+            if (radioButton4.Checked)
             {
                 selectBorder(Color.Red);
             }
@@ -143,38 +142,9 @@ namespace raster_algorithms
             pictureBox1.Invalidate();
         }
 
-        private void loadFillImage()
-        {
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter =
-                "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
-            if (openDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    Image img = Image.FromFile(openDialog.FileName);
-                    pictureBox2.Image = (Image)img.Clone();
-                    pictureBox1.Image = (Image)img.Clone();
-                    bmp = new Bitmap(pictureBox1.Image);
-                    pictureBox1.Image = bmp;
-                    textureBrush = new TextureBrush(img);
-                }
-                catch
-                {
-                    DialogResult rezult = MessageBox.Show("Невозможно открыть выбранный файл",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void chooseImageBtn_Click(object sender, EventArgs e)
-        {
-            loadFillImage();
-        }
-
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton3.Checked)
+            if (radioButton4.Checked)
                 pictureBox1.Cursor = Cursors.Cross;
             else
                 pictureBox1.Cursor = Cursors.Default;
