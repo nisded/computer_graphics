@@ -17,8 +17,10 @@ namespace raster_algorithms
         Bitmap bmp;
         Boolean isMouseDown;
         Point prevPoint;
-
+        TextureBrush textureBrush;
         Point mouseCoord;
+        Color borderColor = Color.FromArgb(255, 0, 0, 0);
+        HashSet<Point> filledPoints = new HashSet<Point>();
 
         public Form1()
         {           
@@ -105,6 +107,12 @@ namespace raster_algorithms
             if (radioButton4.Checked)
             {
                 selectBorder(Color.Red);
+            }
+            if (radioButton3.Checked)
+            {
+                MouseEventArgs m = (MouseEventArgs)e;
+                Point p = m.Location;
+                textureFill2(p);
             }
             pictureBox1.Invalidate();
         }
@@ -219,9 +227,82 @@ namespace raster_algorithms
             foreach (var p in pixels)
                 bmp.SetPixel(p.X, p.Y, c);
         }
+        private void loadFillImage()
+        {
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Filter =
+                "Image Files(*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*";
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Image img = Image.FromFile(openDialog.FileName);
+                    pictureBox2.Image = (Image)img.Clone();
+                    textureBrush = new TextureBrush(img);
+                }
+                catch
+                {
+                    DialogResult rezult = MessageBox.Show("Невозможно открыть выбранный файл",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private Color getColorAt(Point point)
+        {
+            if (pictureBox1.ClientRectangle.Contains(point))
+                return ((Bitmap)pictureBox1.Image).GetPixel(point.X, point.Y);
+            else
+                return Color.Black;
+        }
+        private void DrawHorizontalLineTexture(int x1, int x2, int y)
+        {
+            g.FillRectangle(textureBrush, x1, y, Math.Abs(x2 - x1) + 1, 1);
+            for (int i = x1; i <= x2; ++i)
+                filledPoints.Add(new Point(i, y));
+        }
+        private void textureFill2(Point p)
+        {
+            Color curr = getColorAt(p);
+            Point leftPoint = p;
+            Point rightPoint = p;
+            if (!filledPoints.Contains(p) && pictureBox1.ClientRectangle.Contains(p) && curr != borderColor)
+            {
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(leftPoint))
+                {
+                    leftPoint.X -= 1;
+                    curr = getColorAt(leftPoint);
+                }
+                leftPoint.X += 1;
+                curr = getColorAt(p);
+                while (curr != borderColor && pictureBox1.ClientRectangle.Contains(rightPoint))
+                {
+                    rightPoint.X += 1;
+                    curr = getColorAt(rightPoint);
+                }
+                rightPoint.X -= 1;
+                DrawHorizontalLineTexture(leftPoint.X, rightPoint.X, leftPoint.Y);
+                for (int i = leftPoint.X; i <= rightPoint.X; ++i)
+                {
+                    Point upPoint = new Point(i, p.Y + 1);
+                    Color upC = getColorAt(upPoint);
+                    if (!filledPoints.Contains(upPoint) && upC.ToArgb() != borderColor.ToArgb() && pictureBox1.ClientRectangle.Contains(upPoint))
+                        textureFill2(upPoint);
+                }
+                for (int i = leftPoint.X; i < rightPoint.X; ++i)
+                {
+                    Point downPoint = new Point(i, p.Y - 1);
+                    Color downC = getColorAt(downPoint);
+                    if (!filledPoints.Contains(downPoint) && downC.ToArgb() != borderColor.ToArgb() && pictureBox1.ClientRectangle.Contains(downPoint))
+                        textureFill2(downPoint);
+                }
+                return;
+            }
+        }
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            loadFillImage();
+        }
     }
 }
 
-// Ограничить возможность рисования границы
-
-// Выделение границы после удаления текстуры
