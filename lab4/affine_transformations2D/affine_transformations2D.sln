@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "affine_transformations2D", "affine_transformations2D\affine_transformations2D.csproj", "{001EDF65-049B-4F9B-8CC1-43374551F941}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{001EDF65-049B-4F9B-8CC1-43374551F941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001EDF65-049B-4F9B-8CC1-43374551F941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001EDF65-049B-4F9B-8CC1-43374551F941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001EDF65-049B-4F9B-8CC1-43374551F941}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEC97527-0898-4B6E-A3B4-5D305FE8AB4E}
+	EndGlobalSection
+EndGlobal
