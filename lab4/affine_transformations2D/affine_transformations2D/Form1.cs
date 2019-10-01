@@ -259,7 +259,6 @@ namespace affine_transformations2D
                     segments[i] = new Segment(leftP, rightP);
                     //перенос обратно
                     translate_coordinates(translationPoint.X, translationPoint.Y);
-
                 }
             }
             else if (polygonRB.Checked)
@@ -270,6 +269,94 @@ namespace affine_transformations2D
                     PointF translationPoint;
                     //вокруг заданной точки
                     if (scaleAroundPointCB.Checked)
+                    {
+                        if (pointLocation == Point.Empty)
+                            return;
+                        translationPoint = pointLocation;
+                    }
+                    //вокруг центра полигона
+                    else
+                        translationPoint = new PointF((minPolygonCoord.X + maxPolygonCoord.X) / 2,
+                                                      (minPolygonCoord.Y + maxPolygonCoord.Y) / 2);
+                    //перенос в начало координат
+                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
+                    //масштабирование
+                    Matrix vec = new Matrix(1, 3);
+                    vec[0, 0] = polygon[i].X;
+                    vec[0, 1] = polygon[i].Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    polygon[i] = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    //перенос обратно
+                    translate_coordinates(translationPoint.X, translationPoint.Y);
+                }
+            }
+            pictureBox1.Invalidate();
+        }
+
+        private void Angle90_Click(object sender, EventArgs e)
+        {
+            angleNumUD.Value = 90;
+        }
+
+        private void RotationBtn_Click(object sender, EventArgs e)
+        {
+            double angle = (double)angleNumUD.Value;
+            //матрица сжатия/растяжения
+            Matrix M = new Matrix(3, 3);
+            M[0, 2] = 0;
+            M[1, 2] = 0;
+            M[2, 2] = 1;
+            M[0, 0] = Math.Cos(angle * Math.PI / 180);
+            M[0, 1] = Math.Sin(angle * Math.PI / 180);
+            M[1, 0] = -Math.Sin(angle * Math.PI / 180);
+            M[1, 1] = Math.Cos(angle * Math.PI / 180);
+            M[2, 0] = 0;
+            M[2, 1] = 0;
+            if (segmentRB.Checked)
+            {
+                for (int i = 0; i < segments.Count; ++i)
+                {
+                    //точка, относительно которой масштабировать
+                    PointF translationPoint;
+                    //вокруг заданной точки
+                    if (rotationAroundPointCB.Checked)
+                    {
+                        if (pointLocation == Point.Empty)
+                            return;
+                        translationPoint = pointLocation;
+                    }
+                    //вокруг центра отрезка
+                    else
+                        translationPoint = new PointF((segments[i].leftP.X + segments[i].rightP.X) / 2,
+                                                          (segments[i].leftP.Y + segments[i].rightP.Y) / 2);
+                    //перенос в начало координат
+                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
+                    //масщтабирование
+                    Matrix vec = new Matrix(1, 3);
+                    vec[0, 0] = segments[i].leftP.X;
+                    vec[0, 1] = segments[i].leftP.Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    Point leftP = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    vec[0, 0] = segments[i].rightP.X;
+                    vec[0, 1] = segments[i].rightP.Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    Point rightP = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    segments[i] = new Segment(leftP, rightP);
+                    //перенос обратно
+                    translate_coordinates(translationPoint.X, translationPoint.Y);                   
+                }
+            }
+            else if (polygonRB.Checked)
+            {
+                for (int i = 0; i < polygon.Count; ++i)
+                {
+                    //точка, относительно которой масштабировать
+                    PointF translationPoint;
+                    //вокруг заданной точки
+                    if (rotationAroundPointCB.Checked)
                     {
                         if (pointLocation == Point.Empty)
                             return;

@@ -35,27 +35,40 @@
             this.segmentRB = new System.Windows.Forms.RadioButton();
             this.pointRB = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.biasXNumUD = new System.Windows.Forms.NumericUpDown();
+            this.biasBtn = new System.Windows.Forms.Button();
             this.biasYNumUD = new System.Windows.Forms.NumericUpDown();
+            this.biasXNumUD = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.scaleAroundPointCB = new System.Windows.Forms.CheckBox();
+            this.scaleBtn = new System.Windows.Forms.Button();
+            this.scaleYNumUD = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.scaleXNumUD = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
-            this.scaleYNumUD = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
-            this.biasBtn = new System.Windows.Forms.Button();
-            this.scaleBtn = new System.Windows.Forms.Button();
-            this.scaleAroundPointCB = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.angleNumUD = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.angle90Btn = new System.Windows.Forms.Button();
+            this.rotationAroundPointCB = new System.Windows.Forms.CheckBox();
+            this.rotationBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.biasXNumUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.biasYNumUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.biasXNumUD)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scaleXNumUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scaleXNumUD)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNumUD)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -80,7 +93,7 @@
             this.groupBox1.Controls.Add(this.pointRB);
             this.groupBox1.Location = new System.Drawing.Point(12, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(87, 125);
+            this.groupBox1.Size = new System.Drawing.Size(87, 126);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Примитив";
@@ -142,35 +155,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Смещение";
             // 
-            // label4
+            // biasBtn
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 21);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(12, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "x";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 47);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(12, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "y";
-            // 
-            // biasXNumUD
-            // 
-            this.biasXNumUD.Location = new System.Drawing.Point(29, 21);
-            this.biasXNumUD.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.biasXNumUD.Name = "biasXNumUD";
-            this.biasXNumUD.Size = new System.Drawing.Size(46, 20);
-            this.biasXNumUD.TabIndex = 2;
+            this.biasBtn.Location = new System.Drawing.Point(6, 86);
+            this.biasBtn.Name = "biasBtn";
+            this.biasBtn.Size = new System.Drawing.Size(79, 34);
+            this.biasBtn.TabIndex = 5;
+            this.biasBtn.Text = "Применить";
+            this.biasBtn.UseVisualStyleBackColor = true;
+            this.biasBtn.Click += new System.EventHandler(this.BiasBtn_Click);
             // 
             // biasYNumUD
             // 
@@ -184,25 +177,97 @@
             this.biasYNumUD.Size = new System.Drawing.Size(46, 20);
             this.biasYNumUD.TabIndex = 2;
             // 
+            // biasXNumUD
+            // 
+            this.biasXNumUD.Location = new System.Drawing.Point(29, 21);
+            this.biasXNumUD.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.biasXNumUD.Name = "biasXNumUD";
+            this.biasXNumUD.Size = new System.Drawing.Size(46, 20);
+            this.biasXNumUD.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 47);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(12, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "y";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(12, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "x";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.scaleAroundPointCB);
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.scaleBtn);
             this.groupBox3.Controls.Add(this.scaleYNumUD);
-            this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.scaleXNumUD);
             this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Location = new System.Drawing.Point(202, 1);
+            this.groupBox3.Location = new System.Drawing.Point(202, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(144, 125);
+            this.groupBox3.Size = new System.Drawing.Size(144, 126);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Масштабирование(%)";
             // 
+            // scaleAroundPointCB
+            // 
+            this.scaleAroundPointCB.AutoSize = true;
+            this.scaleAroundPointCB.Location = new System.Drawing.Point(25, 56);
+            this.scaleAroundPointCB.Name = "scaleAroundPointCB";
+            this.scaleAroundPointCB.Size = new System.Drawing.Size(92, 17);
+            this.scaleAroundPointCB.TabIndex = 6;
+            this.scaleAroundPointCB.Text = "Вокруг точки";
+            this.scaleAroundPointCB.UseVisualStyleBackColor = true;
+            // 
+            // scaleBtn
+            // 
+            this.scaleBtn.Location = new System.Drawing.Point(23, 84);
+            this.scaleBtn.Name = "scaleBtn";
+            this.scaleBtn.Size = new System.Drawing.Size(100, 34);
+            this.scaleBtn.TabIndex = 5;
+            this.scaleBtn.Text = "Применить";
+            this.scaleBtn.UseVisualStyleBackColor = true;
+            this.scaleBtn.Click += new System.EventHandler(this.ScaleBtn_Click);
+            // 
+            // scaleYNumUD
+            // 
+            this.scaleYNumUD.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.scaleYNumUD.Location = new System.Drawing.Point(91, 23);
+            this.scaleYNumUD.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.scaleYNumUD.Name = "scaleYNumUD";
+            this.scaleYNumUD.Size = new System.Drawing.Size(46, 20);
+            this.scaleYNumUD.TabIndex = 2;
+            this.scaleYNumUD.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(77, 25);
+            this.label7.Location = new System.Drawing.Point(6, 25);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(12, 13);
             this.label7.TabIndex = 0;
@@ -239,31 +304,9 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "x";
             // 
-            // scaleYNumUD
-            // 
-            this.scaleYNumUD.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.scaleYNumUD.Location = new System.Drawing.Point(91, 23);
-            this.scaleYNumUD.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.scaleYNumUD.Name = "scaleYNumUD";
-            this.scaleYNumUD.Size = new System.Drawing.Size(46, 20);
-            this.scaleYNumUD.TabIndex = 2;
-            this.scaleYNumUD.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(476, 31);
+            this.button1.Location = new System.Drawing.Point(607, 56);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -271,41 +314,105 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // biasBtn
+            // groupBox4
             // 
-            this.biasBtn.Location = new System.Drawing.Point(6, 86);
-            this.biasBtn.Name = "biasBtn";
-            this.biasBtn.Size = new System.Drawing.Size(79, 34);
-            this.biasBtn.TabIndex = 5;
-            this.biasBtn.Text = "Применить";
-            this.biasBtn.UseVisualStyleBackColor = true;
-            this.biasBtn.Click += new System.EventHandler(this.BiasBtn_Click);
+            this.groupBox4.Controls.Add(this.numericUpDown1);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Location = new System.Drawing.Point(352, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(149, 126);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Поворот";
             // 
-            // scaleBtn
+            // numericUpDown1
             // 
-            this.scaleBtn.Location = new System.Drawing.Point(23, 84);
-            this.scaleBtn.Name = "scaleBtn";
-            this.scaleBtn.Size = new System.Drawing.Size(100, 34);
-            this.scaleBtn.TabIndex = 5;
-            this.scaleBtn.Text = "Применить";
-            this.scaleBtn.UseVisualStyleBackColor = true;
-            this.scaleBtn.Click += new System.EventHandler(this.ScaleBtn_Click);
+            this.numericUpDown1.Location = new System.Drawing.Point(37, 23);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(49, 20);
+            this.numericUpDown1.TabIndex = 0;
             // 
-            // scaleAroundPointCB
+            // groupBox5
             // 
-            this.scaleAroundPointCB.AutoSize = true;
-            this.scaleAroundPointCB.Location = new System.Drawing.Point(25, 56);
-            this.scaleAroundPointCB.Name = "scaleAroundPointCB";
-            this.scaleAroundPointCB.Size = new System.Drawing.Size(92, 17);
-            this.scaleAroundPointCB.TabIndex = 6;
-            this.scaleAroundPointCB.Text = "Вокруг точки";
-            this.scaleAroundPointCB.UseVisualStyleBackColor = true;
+            this.groupBox5.Controls.Add(this.rotationAroundPointCB);
+            this.groupBox5.Controls.Add(this.angle90Btn);
+            this.groupBox5.Controls.Add(this.rotationBtn);
+            this.groupBox5.Controls.Add(this.angleNumUD);
+            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Location = new System.Drawing.Point(352, 0);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(149, 126);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Поворот";
+            // 
+            // angleNumUD
+            // 
+            this.angleNumUD.Location = new System.Drawing.Point(44, 23);
+            this.angleNumUD.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.angleNumUD.Name = "angleNumUD";
+            this.angleNumUD.Size = new System.Drawing.Size(49, 20);
+            this.angleNumUD.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Угол";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(77, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(12, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "y";
+            // 
+            // angle90Btn
+            // 
+            this.angle90Btn.Location = new System.Drawing.Point(105, 21);
+            this.angle90Btn.Name = "angle90Btn";
+            this.angle90Btn.Size = new System.Drawing.Size(31, 23);
+            this.angle90Btn.TabIndex = 1;
+            this.angle90Btn.Text = "90";
+            this.angle90Btn.UseVisualStyleBackColor = true;
+            this.angle90Btn.Click += new System.EventHandler(this.Angle90_Click);
+            // 
+            // rotationAroundPointCB
+            // 
+            this.rotationAroundPointCB.AutoSize = true;
+            this.rotationAroundPointCB.Location = new System.Drawing.Point(24, 56);
+            this.rotationAroundPointCB.Name = "rotationAroundPointCB";
+            this.rotationAroundPointCB.Size = new System.Drawing.Size(92, 17);
+            this.rotationAroundPointCB.TabIndex = 6;
+            this.rotationAroundPointCB.Text = "Вокруг точки";
+            this.rotationAroundPointCB.UseVisualStyleBackColor = true;
+            // 
+            // rotationBtn
+            // 
+            this.rotationBtn.Location = new System.Drawing.Point(24, 84);
+            this.rotationBtn.Name = "rotationBtn";
+            this.rotationBtn.Size = new System.Drawing.Size(100, 34);
+            this.rotationBtn.TabIndex = 5;
+            this.rotationBtn.Text = "Применить";
+            this.rotationBtn.UseVisualStyleBackColor = true;
+            this.rotationBtn.Click += new System.EventHandler(this.RotationBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 470);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -319,12 +426,18 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.biasXNumUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.biasYNumUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.biasXNumUD)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scaleXNumUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scaleYNumUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scaleXNumUD)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.angleNumUD)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -351,6 +464,15 @@
         private System.Windows.Forms.Button biasBtn;
         private System.Windows.Forms.Button scaleBtn;
         private System.Windows.Forms.CheckBox scaleAroundPointCB;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox rotationAroundPointCB;
+        private System.Windows.Forms.Button angle90Btn;
+        private System.Windows.Forms.Button rotationBtn;
+        private System.Windows.Forms.NumericUpDown angleNumUD;
+        private System.Windows.Forms.Label label1;
     }
 }
 
