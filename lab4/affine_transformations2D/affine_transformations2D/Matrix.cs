@@ -68,6 +68,5 @@ namespace affine_transformations2D
             });
             return result;
         }
-
     }
 }

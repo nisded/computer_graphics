@@ -22,21 +22,6 @@ namespace affine_transformations2D
         Point startPoint, endPoint;
         Point minPolygonCoord, maxPolygonCoord;
 
-        /*[DllImport("kernel32.dll",
-            EntryPoint = "GetStdHandle",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-        [DllImport("kernel32.dll",
-            EntryPoint = "AllocConsole",
-            SetLastError = true,
-            CharSet = CharSet.Auto,
-            CallingConvention = CallingConvention.StdCall)]
-        private static extern int AllocConsole();
-        private const int STD_OUTPUT_HANDLE = -11;
-        private const int MY_CODE_PAGE = 437;*/
-
         public Form1()
         {
             InitializeComponent();
@@ -134,27 +119,6 @@ namespace affine_transformations2D
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            /*AllocConsole();
-            Matrix M = new Matrix(3, 3);
-            M[0, 2] = 0;
-            M[1, 2] = 0;
-            M[2, 2] = 1;
-            M[0, 0] = 4;
-            M[1, 1] = 4;
-            M[0, 1] = 0;
-            M[1, 0] = 0;
-            M[2, 0] = 0;
-            M[2, 1] = 0;
-            for (int i = 0; i < M.M; ++i)
-            {
-                for (int j = 0; j < M.N; ++j)
-                {
-                    Console.Write(M[i, j]);
-                    Console.Write(' ');
-
-                }
-                Console.WriteLine();
-            }*/
         }
 
         private void translate_coordinates(double dx, double dy)
@@ -210,21 +174,14 @@ namespace affine_transformations2D
             pictureBox1.Invalidate();
         }
 
-        private void ScaleBtn_Click(object sender, EventArgs e)
+        private void scale_or_rotate_primitive(Matrix M, Boolean action)
         {
-            double x = (double)scaleXNumUD.Value / 100;
-            double y = (double)scaleYNumUD.Value / 100;
-            //матрица сжатия/растяжения
-            Matrix M = new Matrix(3, 3);
-            M[0, 2] = 0;
-            M[1, 2] = 0;
-            M[2, 2] = 1;
-            M[0, 0] = x;
-            M[1, 1] = y;
-            M[0, 1] = 0;
-            M[1, 0] = 0;
-            M[2, 0] = 0;
-            M[2, 1] = 0;
+            CheckBox aroundPointCB;
+            if (action)
+                aroundPointCB = scaleAroundPointCB;
+            else
+                aroundPointCB = rotationAroundPointCB;
+
             if (segmentRB.Checked)
             {
                 for (int i = 0; i < segments.Count; ++i)
@@ -232,7 +189,7 @@ namespace affine_transformations2D
                     //точка, относительно которой масштабировать
                     PointF translationPoint;
                     //вокруг заданной точки
-                    if (scaleAroundPointCB.Checked)
+                    if (aroundPointCB.Checked)
                     {
                         if (pointLocation == Point.Empty)
                             return;
@@ -244,7 +201,7 @@ namespace affine_transformations2D
                                                           (segments[i].leftP.Y + segments[i].rightP.Y) / 2);
                     //перенос в начало координат
                     translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
-                    //масщтабирование
+                    //масштабирование
                     Matrix vec = new Matrix(1, 3);
                     vec[0, 0] = segments[i].leftP.X;
                     vec[0, 1] = segments[i].leftP.Y;
@@ -268,7 +225,7 @@ namespace affine_transformations2D
                     //точка, относительно которой масштабировать
                     PointF translationPoint;
                     //вокруг заданной точки
-                    if (scaleAroundPointCB.Checked)
+                    if (aroundPointCB.Checked)
                     {
                         if (pointLocation == Point.Empty)
                             return;
@@ -291,6 +248,24 @@ namespace affine_transformations2D
                     translate_coordinates(translationPoint.X, translationPoint.Y);
                 }
             }
+        }
+
+        private void ScaleBtn_Click(object sender, EventArgs e)
+        {
+            double x = (double)scaleXNumUD.Value / 100;
+            double y = (double)scaleYNumUD.Value / 100;
+            //матрица сжатия/растяжения
+            Matrix M = new Matrix(3, 3);
+            M[0, 2] = 0;
+            M[1, 2] = 0;
+            M[2, 2] = 1;
+            M[0, 0] = x;
+            M[1, 1] = y;
+            M[0, 1] = 0;
+            M[1, 0] = 0;
+            M[2, 0] = 0;
+            M[2, 1] = 0;
+            scale_or_rotate_primitive(M, true);
             pictureBox1.Invalidate();
         }
 
@@ -312,73 +287,8 @@ namespace affine_transformations2D
             M[1, 0] = -Math.Sin(angle * Math.PI / 180);
             M[1, 1] = Math.Cos(angle * Math.PI / 180);
             M[2, 0] = 0;
-            M[2, 1] = 0;
-            if (segmentRB.Checked)
-            {
-                for (int i = 0; i < segments.Count; ++i)
-                {
-                    //точка, относительно которой масштабировать
-                    PointF translationPoint;
-                    //вокруг заданной точки
-                    if (rotationAroundPointCB.Checked)
-                    {
-                        if (pointLocation == Point.Empty)
-                            return;
-                        translationPoint = pointLocation;
-                    }
-                    //вокруг центра отрезка
-                    else
-                        translationPoint = new PointF((segments[i].leftP.X + segments[i].rightP.X) / 2,
-                                                          (segments[i].leftP.Y + segments[i].rightP.Y) / 2);
-                    //перенос в начало координат
-                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
-                    //масщтабирование
-                    Matrix vec = new Matrix(1, 3);
-                    vec[0, 0] = segments[i].leftP.X;
-                    vec[0, 1] = segments[i].leftP.Y;
-                    vec[0, 2] = 1;
-                    vec *= M;
-                    Point leftP = new Point((int)vec[0, 0], (int)vec[0, 1]);
-                    vec[0, 0] = segments[i].rightP.X;
-                    vec[0, 1] = segments[i].rightP.Y;
-                    vec[0, 2] = 1;
-                    vec *= M;
-                    Point rightP = new Point((int)vec[0, 0], (int)vec[0, 1]);
-                    segments[i] = new Segment(leftP, rightP);
-                    //перенос обратно
-                    translate_coordinates(translationPoint.X, translationPoint.Y);                   
-                }
-            }
-            else if (polygonRB.Checked)
-            {
-                for (int i = 0; i < polygon.Count; ++i)
-                {
-                    //точка, относительно которой масштабировать
-                    PointF translationPoint;
-                    //вокруг заданной точки
-                    if (rotationAroundPointCB.Checked)
-                    {
-                        if (pointLocation == Point.Empty)
-                            return;
-                        translationPoint = pointLocation;
-                    }
-                    //вокруг центра полигона
-                    else
-                        translationPoint = new PointF((minPolygonCoord.X + maxPolygonCoord.X) / 2,
-                                                      (minPolygonCoord.Y + maxPolygonCoord.Y) / 2);
-                    //перенос в начало координат
-                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
-                    //масштабирование
-                    Matrix vec = new Matrix(1, 3);
-                    vec[0, 0] = polygon[i].X;
-                    vec[0, 1] = polygon[i].Y;
-                    vec[0, 2] = 1;
-                    vec *= M;
-                    polygon[i] = new Point((int)vec[0, 0], (int)vec[0, 1]);
-                    //перенос обратно
-                    translate_coordinates(translationPoint.X, translationPoint.Y);
-                }
-            }
+            M[2, 1] = 0;         
+            scale_or_rotate_primitive(M, false);
             pictureBox1.Invalidate();
         }
 
