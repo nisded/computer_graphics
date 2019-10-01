@@ -20,8 +20,9 @@ namespace affine_transformations2D
         List<Point> polygon = new List<Point>();
         Boolean isMouseDown = false;
         Point startPoint, endPoint;
+        Point minPolygonCoord, maxPolygonCoord;
 
-        [DllImport("kernel32.dll",
+        /*[DllImport("kernel32.dll",
             EntryPoint = "GetStdHandle",
             SetLastError = true,
             CharSet = CharSet.Auto,
@@ -34,7 +35,7 @@ namespace affine_transformations2D
             CallingConvention = CallingConvention.StdCall)]
         private static extern int AllocConsole();
         private const int STD_OUTPUT_HANDLE = -11;
-        private const int MY_CODE_PAGE = 437;
+        private const int MY_CODE_PAGE = 437;*/
 
         public Form1()
         {
@@ -72,6 +73,8 @@ namespace affine_transformations2D
                 if (polygon.Count == 0)
                 {
                     startPoint = e.Location;
+                    minPolygonCoord = e.Location;
+                    maxPolygonCoord = e.Location;
                     polygon.Add(startPoint);
                 }
             }
@@ -110,6 +113,15 @@ namespace affine_transformations2D
                 if (endPoint == Point.Empty)
                     return;
                 polygon.Add(endPoint);
+                if (endPoint.X < minPolygonCoord.X)
+                    minPolygonCoord.X = endPoint.X;
+                if (endPoint.Y < minPolygonCoord.Y)
+                    minPolygonCoord.Y = endPoint.Y;
+                if (endPoint.X > maxPolygonCoord.X)
+                    maxPolygonCoord.X = endPoint.X;
+                if (endPoint.Y > maxPolygonCoord.Y)
+                    maxPolygonCoord.Y = endPoint.Y;
+
                 startPoint = endPoint;
                 endPoint = Point.Empty;
             }
@@ -120,14 +132,9 @@ namespace affine_transformations2D
             pictureBox1.Invalidate();
         }
 
-        private void BiasXNumUD_ValueChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
-            AllocConsole();
+            /*AllocConsole();
             Matrix M = new Matrix(3, 3);
             M[0, 2] = 0;
             M[1, 2] = 0;
@@ -138,12 +145,6 @@ namespace affine_transformations2D
             M[1, 0] = 0;
             M[2, 0] = 0;
             M[2, 1] = 0;
-
-
-
-
-
-
             for (int i = 0; i < M.M; ++i)
             {
                 for (int j = 0; j < M.N; ++j)
@@ -153,11 +154,12 @@ namespace affine_transformations2D
 
                 }
                 Console.WriteLine();
-            }
+            }*/
         }
 
-        private void translation(double x, double y)
+        private void translate_coordinates(double dx, double dy)
         {
+            //матрица переноса
             Matrix M = new Matrix(3, 3);
             M[0, 2] = 0;
             M[1, 2] = 0;
@@ -166,63 +168,12 @@ namespace affine_transformations2D
             M[0, 1] = 0;
             M[1, 0] = 0;
             M[1, 1] = 1;
-            M[2, 0] = x;
-            M[2, 1] = y;
-            for (int i = 0; i < segments.Count; ++i)
-            {
-                Matrix vec = new Matrix(1, 3);
-                vec[0, 0] = segments[i].leftP.X;
-                vec[0, 1] = segments[i].leftP.Y;
-                vec[0, 2] = 1;
-                vec *= M;
-                Point leftP = new Point((int)vec[0, 0], (int)vec[0, 1]);
-                vec[0, 0] = segments[i].rightP.X;
-                vec[0, 1] = segments[i].rightP.Y;
-                vec[0, 2] = 1;
-                vec *= M;
-                Point rightP = new Point((int)vec[0, 0], (int)vec[0, 1]);
-                segments[i] = new Segment(leftP, rightP);
-            }
-        }
-
-        private void BiasBtn_Click(object sender, EventArgs e)
-        {
-            int x = (int)biasXNumUD.Value;
-            int y = (int)biasYNumUD.Value;
-            translation(x, y);
-            pictureBox1.Invalidate();
-        }
-
-        private void ScaleBtn_Click(object sender, EventArgs e)
-        {
-            double x = (double)scaleXNumUD.Value / 100;
-            double y = (double)scaleYNumUD.Value / 100;
-            Matrix M = new Matrix(3, 3);
-            M[0, 2] = 0;
-            M[1, 2] = 0;
-            M[2, 2] = 1;
-            M[0, 0] = x;
-            M[1, 1] = y;
-            M[0, 1] = 0;
-            M[1, 0] = 0;
-            M[2, 0] = 0;
-            M[2, 1] = 0;
+            M[2, 0] = dx;
+            M[2, 1] = dy;
             if (segmentRB.Checked)
             {
-                
                 for (int i = 0; i < segments.Count; ++i)
                 {
-                    PointF centerSegment;
-                    if (scaleAroundPointCB.Checked)
-                    {
-                        if (pointLocation == Point.Empty)
-                            return;
-                        centerSegment = pointLocation;
-                    }
-                    else
-                        centerSegment = new PointF((segments[i].leftP.X + segments[i].rightP.X) / 2,
-                                                          (segments[i].leftP.Y + segments[i].rightP.Y) / 2);
-                    translation(-1 * centerSegment.X, -1 * centerSegment.Y);
                     Matrix vec = new Matrix(1, 3);
                     vec[0, 0] = segments[i].leftP.X;
                     vec[0, 1] = segments[i].leftP.Y;
@@ -235,13 +186,111 @@ namespace affine_transformations2D
                     vec *= M;
                     Point rightP = new Point((int)vec[0, 0], (int)vec[0, 1]);
                     segments[i] = new Segment(leftP, rightP);
-                    translation(centerSegment.X, centerSegment.Y);
+                }
+            }
+            else if (polygonRB.Checked)
+            {
+                for (int i = 0; i < polygon.Count; ++i)
+                {
+                    Matrix vec = new Matrix(1, 3);
+                    vec[0, 0] = polygon[i].X;
+                    vec[0, 1] = polygon[i].Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    polygon[i] = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                }
+            }
+        }
+
+        private void BiasBtn_Click(object sender, EventArgs e)
+        {
+            int x = (int)biasXNumUD.Value;
+            int y = (int)biasYNumUD.Value;
+            translate_coordinates(x, y);
+            pictureBox1.Invalidate();
+        }
+
+        private void ScaleBtn_Click(object sender, EventArgs e)
+        {
+            double x = (double)scaleXNumUD.Value / 100;
+            double y = (double)scaleYNumUD.Value / 100;
+            //матрица сжатия/растяжения
+            Matrix M = new Matrix(3, 3);
+            M[0, 2] = 0;
+            M[1, 2] = 0;
+            M[2, 2] = 1;
+            M[0, 0] = x;
+            M[1, 1] = y;
+            M[0, 1] = 0;
+            M[1, 0] = 0;
+            M[2, 0] = 0;
+            M[2, 1] = 0;
+            if (segmentRB.Checked)
+            {
+                for (int i = 0; i < segments.Count; ++i)
+                {
+                    //точка, относительно которой масштабировать
+                    PointF translationPoint;
+                    //вокруг заданной точки
+                    if (scaleAroundPointCB.Checked)
+                    {
+                        if (pointLocation == Point.Empty)
+                            return;
+                        translationPoint = pointLocation;
+                    }
+                    //вокруг центра отрезка
+                    else
+                        translationPoint = new PointF((segments[i].leftP.X + segments[i].rightP.X) / 2,
+                                                          (segments[i].leftP.Y + segments[i].rightP.Y) / 2);
+                    //перенос в начало координат
+                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
+                    //масщтабирование
+                    Matrix vec = new Matrix(1, 3);
+                    vec[0, 0] = segments[i].leftP.X;
+                    vec[0, 1] = segments[i].leftP.Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    Point leftP = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    vec[0, 0] = segments[i].rightP.X;
+                    vec[0, 1] = segments[i].rightP.Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    Point rightP = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    segments[i] = new Segment(leftP, rightP);
+                    //перенос обратно
+                    translate_coordinates(translationPoint.X, translationPoint.Y);
 
                 }
             }
             else if (polygonRB.Checked)
             {
-
+                for (int i = 0; i < polygon.Count; ++i)
+                {
+                    //точка, относительно которой масштабировать
+                    PointF translationPoint;
+                    //вокруг заданной точки
+                    if (scaleAroundPointCB.Checked)
+                    {
+                        if (pointLocation == Point.Empty)
+                            return;
+                        translationPoint = pointLocation;
+                    }
+                    //вокруг центра полигона
+                    else
+                        translationPoint = new PointF((minPolygonCoord.X + maxPolygonCoord.X) / 2,
+                                                      (minPolygonCoord.Y + maxPolygonCoord.Y) / 2);
+                    //перенос в начало координат
+                    translate_coordinates(-1 * translationPoint.X, -1 * translationPoint.Y);
+                    //масштабирование
+                    Matrix vec = new Matrix(1, 3);
+                    vec[0, 0] = polygon[i].X;
+                    vec[0, 1] = polygon[i].Y;
+                    vec[0, 2] = 1;
+                    vec *= M;
+                    polygon[i] = new Point((int)vec[0, 0], (int)vec[0, 1]);
+                    //перенос обратно
+                    translate_coordinates(translationPoint.X, translationPoint.Y);
+                }
             }
             pictureBox1.Invalidate();
         }
@@ -274,7 +323,7 @@ namespace affine_transformations2D
             {
                 g.DrawEllipse(Pens.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
                 g.FillEllipse(Brushes.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
-            }
+            }      
         }
     }
 }

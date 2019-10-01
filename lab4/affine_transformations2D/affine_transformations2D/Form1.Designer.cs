@@ -171,7 +171,6 @@
             this.biasXNumUD.Name = "biasXNumUD";
             this.biasXNumUD.Size = new System.Drawing.Size(46, 20);
             this.biasXNumUD.TabIndex = 2;
-            this.biasXNumUD.ValueChanged += new System.EventHandler(this.BiasXNumUD_ValueChanged);
             // 
             // biasYNumUD
             // 
