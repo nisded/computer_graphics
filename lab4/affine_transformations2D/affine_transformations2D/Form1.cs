@@ -22,7 +22,6 @@ namespace affine_transformations2D
         private string mode = "";
         Point startPoint, endPoint;
         Point minPolygonCoord, maxPolygonCoord;
-        private PointF clickedPosition = new PointF(0, 0);
 
         public Form1()
         {
@@ -65,122 +64,9 @@ namespace affine_transformations2D
                     polygon.Add(startPoint);
                 }
             }
-            else if (radioButton1.Checked)
-            {
-                isMouseDown = true;
-                clickedPosition = new PointF(e.Location.X, e.Location.Y);
-                chosenPointTb.Text = string.Format("X: {0} Y: {1}", clickedPosition.X, clickedPosition.Y);
-
-            }
         }
 
-        private void refresh_labels()
-        {
-            if (polygon.Count > 2)
-            {
-                bool res = isInside(polygon, clickedPosition);
-                if (isInside(polygon, clickedPosition))
-                {
-                    label11.Text = "Принадлежит многоугольнику";
-                }
-                else
-                {
-                    label11.Text = "Не принадлежит многоугольнику";
-                }
-            }
-            else
-            {
-                label11.Text = "";
-            }
-
-            if (segments.Count > 3)
-            {
-                int n = segments.Count - 3;
-                int pos = findWhereThePointIs(clickedPosition, segments[n - 1].leftP, segments[n].rightP);
-                if (pos == 0)
-                    label13.Text = "Лежит на линии";
-                else
-                    if (pos > 0)
-                    label13.Text = "Лежит слева от линии";
-                else
-                    label13.Text = "Лежит справа от линии";
-            }
-            else
-            {
-                label13.Text = "";
-            }
-        }
-        bool isInside(List<Point> polygon, PointF p)
-        {
-            int n = polygon.Count;
-            if (n < 3) return false;
-
-            PointF extreme = new PointF(pictureBox1.Width, p.Y);
-
-            int count = 0, i = 0;
-            do
-            {
-                int next = (i + 1) % n;
-                PointF intersection = findIntersection(polygon[i], polygon[next], p, extreme);
-                if (intersection.X != -1)
-                {
-                    // If the point 'p' is colinear with line segment 'i-next',
-                    // then check if it lies on segment. If it lies, return true,
-                    // otherwise false
-                    if (orientation(polygon[i], p, polygon[next]) == 0)
-                        return onSegment(polygon[i], p, polygon[next]);
-
-                    count++;
-                }
-                i = next;
-            } while (i != 0);
-
-            // Return true if count is odd, false otherwise
-            return count % 2 == 1;
-        }
-        int orientation(PointF p, PointF q, PointF r)
-        {
-            float val = (q.Y - p.Y) * (r.X - q.X) -
-                      (q.X - p.X) * (r.Y - q.Y);
-
-            if (val == 0) return 0;  // colinear
-            return (val > 0) ? 1 : 2; // clock or counterclock wise
-        }
-        bool onSegment(PointF q, PointF p, PointF r)
-        {
-            if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
-                    q.Y <= Math.Max(p.Y, r.Y) && q.Y >= Math.Min(p.Y, r.Y))
-                return true;
-            return false;
-        }
-        PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
-        {
-            PointF i = new PointF(-1, -1);
-            PointF s1 = new PointF();
-            PointF s2 = new PointF();
-            s1.X = p1.X - p0.X;
-            s1.Y = p1.Y - p0.Y;
-            s2.X = p3.X - p2.X;
-            s2.Y = p3.Y - p2.Y;
-            float s, t;
-            s = (-s1.Y * (p0.X - p2.X) + s1.X * (p0.Y - p2.Y)) / (-s2.X * s1.Y + s1.X * s2.Y);
-            t = (s2.X * (p0.Y - p2.Y) - s2.Y * (p0.X - p2.X)) / (-s2.X * s1.Y + s1.X * s2.Y);
-
-            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
-            {
-                i.X = p0.X + (t * s1.X);
-                i.Y = p0.Y + (t * s1.Y);
-
-            }
-            return i;
-        }
-        int findWhereThePointIs(PointF p, Point A, Point B)
-        {
-            float result = (B.X - A.X) * (p.Y - B.Y) - (B.Y - A.Y) * (p.X - B.X);
-            return (int)result;
-        }
-
-    private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (segmentRB.Checked && isMouseDown)
             {
@@ -229,14 +115,7 @@ namespace affine_transformations2D
             {
                 pointLocation = e.Location;
             }
-            else if (radioButton1.Checked)
-            {
-            }
             pictureBox1.Invalidate();
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
         }
 
         private void translate_coordinates(double dx, double dy)
@@ -392,30 +271,6 @@ namespace affine_transformations2D
             angleNumUD.Value = 90;
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SegmentRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void PointRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
-        private void PolygonRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
         private void RotationBtn_Click(object sender, EventArgs e)
         {
             double angle = (double)angleNumUD.Value;
@@ -429,7 +284,7 @@ namespace affine_transformations2D
             M[1, 0] = -Math.Sin(angle * Math.PI / 180);
             M[1, 1] = Math.Cos(angle * Math.PI / 180);
             M[2, 0] = 0;
-            M[2, 1] = 0;         
+            M[2, 1] = 0;
             scale_or_rotate_primitive(M, false);
             pictureBox1.Invalidate();
         }
@@ -465,5 +320,139 @@ namespace affine_transformations2D
             }
             refresh_labels();
         }
+
+        private void refresh_labels()
+        {
+            if (polygon.Count > 2)
+            {
+                bool res = isInside(polygon, pointLocation);
+                if (isInside(polygon, pointLocation))
+                {
+                    label11.Text = "Принадлежит многоугольнику";
+                }
+                else
+                {
+                    label11.Text = "Не принадлежит многоугольнику";
+                }
+            }
+            else
+            {
+                label11.Text = "";
+            }
+
+            if (segments.Count > 3)
+            {
+                int n = segments.Count - 3;
+                int pos = findWhereThePointIs(pointLocation, segments[n - 1].leftP, segments[n].rightP);
+                if (pos == 0)
+                    label13.Text = "Лежит на линии";
+                else
+                    if (pos > 0)
+                    label13.Text = "Лежит слева от линии";
+                else
+                    label13.Text = "Лежит справа от линии";
+            }
+            else
+            {
+                label13.Text = "";
+            }
+        }
+        bool isInside(List<Point> polygon, PointF p)
+        {
+            int n = polygon.Count;
+            if (n < 3) return false;
+
+            PointF extreme = new PointF(pictureBox1.Width, p.Y);
+
+            int count = 0, i = 0;
+            do
+            {
+                int next = (i + 1) % n;
+                PointF intersection = findIntersection(polygon[i], polygon[next], p, extreme);
+                if (intersection.X != -1)
+                {
+                    // If the point 'p' is colinear with line segment 'i-next',
+                    // then check if it lies on segment. If it lies, return true,
+                    // otherwise false
+                    if (orientation(polygon[i], p, polygon[next]) == 0)
+                        return onSegment(polygon[i], p, polygon[next]);
+
+                    count++;
+                }
+                i = next;
+            } while (i != 0);
+
+            // Return true if count is odd, false otherwise
+            return count % 2 == 1;
+        }
+        int orientation(PointF p, PointF q, PointF r)
+        {
+            float val = (q.Y - p.Y) * (r.X - q.X) -
+                      (q.X - p.X) * (r.Y - q.Y);
+
+            if (val == 0) return 0;  // colinear
+            return (val > 0) ? 1 : 2; // clock or counterclock wise
+        }
+        bool onSegment(PointF q, PointF p, PointF r)
+        {
+            if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
+                    q.Y <= Math.Max(p.Y, r.Y) && q.Y >= Math.Min(p.Y, r.Y))
+                return true;
+            return false;
+        }
+        PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
+        {
+            PointF i = new PointF(-1, -1);
+            PointF s1 = new PointF();
+            PointF s2 = new PointF();
+            s1.X = p1.X - p0.X;
+            s1.Y = p1.Y - p0.Y;
+            s2.X = p3.X - p2.X;
+            s2.Y = p3.Y - p2.Y;
+            float s, t;
+            s = (-s1.Y * (p0.X - p2.X) + s1.X * (p0.Y - p2.Y)) / (-s2.X * s1.Y + s1.X * s2.Y);
+            t = (s2.X * (p0.Y - p2.Y) - s2.Y * (p0.X - p2.X)) / (-s2.X * s1.Y + s1.X * s2.Y);
+
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+            {
+                i.X = p0.X + (t * s1.X);
+                i.Y = p0.Y + (t * s1.Y);
+
+            }
+            return i;
+        }
+        int findWhereThePointIs(PointF p, Point A, Point B)
+        {
+            float result = (B.X - A.X) * (p.Y - B.Y) - (B.Y - A.Y) * (p.X - B.X);
+            return (int)result;
+        }
+
+        
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SegmentRB_CheckedChanged(object sender, EventArgs e)
+        {
+            mode = "";
+        }
+
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void PointRB_CheckedChanged(object sender, EventArgs e)
+        {
+            mode = "";
+        }
+
+        private void PolygonRB_CheckedChanged(object sender, EventArgs e)
+        {
+            mode = "";
+        }
+
+        
     }
 }
