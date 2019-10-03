@@ -43,6 +43,8 @@ namespace affine_transformations2D
             segments.Clear();
             polygon.Clear();
             pointLocation = Point.Empty;
+            posRelativeToSegmentLabel.Text = "Положение точки отн-но ребра";
+            posRelativeToPolygonLabel.Text = "Принадлежность точки полигону";
             pictureBox1.Invalidate();
         }
 
@@ -65,7 +67,6 @@ namespace affine_transformations2D
                 }
             }
         }
-
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (segmentRB.Checked && isMouseDown)
@@ -323,41 +324,35 @@ namespace affine_transformations2D
 
         private void refresh_labels()
         {
-            if (polygon.Count > 2)
-            {
-                bool res = isInside(polygon, pointLocation);
-                if (isInside(polygon, pointLocation))
-                {
-                    label11.Text = "Принадлежит многоугольнику";
-                }
+            if (segments.Count > 0)
+            {              
+                int n = segments.Count - 1; //индекс последнего ребра
+                int pos = find_where_the_point_is(pointLocation, segments[n].leftP, segments[n].rightP);
+                if (pos == 0)
+                    posRelativeToSegmentLabel.Text = "Лежит на линии";
+                else if (pos > 0)
+                    posRelativeToSegmentLabel.Text = "Лежит слева от линии";
                 else
-                {
-                    label11.Text = "Не принадлежит многоугольнику";
-                }
-            }
-            else
-            {
-                label11.Text = "";
+                    posRelativeToSegmentLabel.Text = "Лежит справа от линии";
             }
 
-            if (segments.Count > 3)
+            if (polygon.Count > 2)
             {
-                int n = segments.Count - 3;
-                int pos = findWhereThePointIs(pointLocation, segments[n - 1].leftP, segments[n].rightP);
-                if (pos == 0)
-                    label13.Text = "Лежит на линии";
+                if (is_point_inside(polygon, pointLocation))
+                    posRelativeToPolygonLabel.Text = "Принадлежит полигону";
                 else
-                    if (pos > 0)
-                    label13.Text = "Лежит слева от линии";
-                else
-                    label13.Text = "Лежит справа от линии";
-            }
-            else
-            {
-                label13.Text = "";
+                    posRelativeToPolygonLabel.Text = "Не принадлежит полигону";
             }
         }
-        bool isInside(List<Point> polygon, PointF p)
+
+        // Классифицирует положение точки относительно ребра     
+        int find_where_the_point_is(PointF p, Point A, Point B)
+        {
+            return (int)((p.X - A.X) * (B.Y - A.Y) - (p.Y - A.Y) * (B.X - A.X));
+        }
+
+        //определяет принадлежит ли точка полигону
+        bool is_point_inside(List<Point> polygon, Point p)
         {
             int n = polygon.Count;
             if (n < 3) return false;
@@ -385,6 +380,7 @@ namespace affine_transformations2D
             // Return true if count is odd, false otherwise
             return count % 2 == 1;
         }
+
         int orientation(PointF p, PointF q, PointF r)
         {
             float val = (q.Y - p.Y) * (r.X - q.X) -
@@ -393,6 +389,7 @@ namespace affine_transformations2D
             if (val == 0) return 0;  // colinear
             return (val > 0) ? 1 : 2; // clock or counterclock wise
         }
+
         bool onSegment(PointF q, PointF p, PointF r)
         {
             if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
@@ -400,6 +397,7 @@ namespace affine_transformations2D
                 return true;
             return false;
         }
+
         PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
         {
             PointF i = new PointF(-1, -1);
@@ -420,39 +418,6 @@ namespace affine_transformations2D
 
             }
             return i;
-        }
-        int findWhereThePointIs(PointF p, Point A, Point B)
-        {
-            float result = (B.X - A.X) * (p.Y - B.Y) - (B.Y - A.Y) * (p.X - B.X);
-            return (int)result;
-        }
-
-        
-
-        private void Button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SegmentRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void PointRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
-        private void PolygonRB_CheckedChanged(object sender, EventArgs e)
-        {
-            mode = "";
-        }
-
-        
+        }     
     }
 }

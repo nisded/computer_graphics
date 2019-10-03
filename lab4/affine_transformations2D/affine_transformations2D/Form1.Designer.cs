@@ -56,11 +56,9 @@
             this.rotationBtn = new System.Windows.Forms.Button();
             this.angleNumUD = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.posRelativeToPolygonLabel = new System.Windows.Forms.Label();
+            this.posRelativeToSegmentLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -93,6 +91,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.polygonRB);
+            this.groupBox1.Controls.Add(this.clearBtn);
             this.groupBox1.Controls.Add(this.segmentRB);
             this.groupBox1.Controls.Add(this.pointRB);
             this.groupBox1.Location = new System.Drawing.Point(12, 0);
@@ -112,7 +111,6 @@
             this.polygonRB.TabStop = true;
             this.polygonRB.Text = "Полигон";
             this.polygonRB.UseVisualStyleBackColor = true;
-            this.polygonRB.CheckedChanged += new System.EventHandler(this.PolygonRB_CheckedChanged);
             // 
             // segmentRB
             // 
@@ -124,7 +122,6 @@
             this.segmentRB.TabStop = true;
             this.segmentRB.Text = "Отрезок";
             this.segmentRB.UseVisualStyleBackColor = true;
-            this.segmentRB.CheckedChanged += new System.EventHandler(this.SegmentRB_CheckedChanged);
             // 
             // pointRB
             // 
@@ -136,11 +133,10 @@
             this.pointRB.TabStop = true;
             this.pointRB.Text = "Точка";
             this.pointRB.UseVisualStyleBackColor = true;
-            this.pointRB.CheckedChanged += new System.EventHandler(this.PointRB_CheckedChanged);
             // 
             // clearBtn
             // 
-            this.clearBtn.Location = new System.Drawing.Point(507, 40);
+            this.clearBtn.Location = new System.Drawing.Point(6, 87);
             this.clearBtn.Name = "clearBtn";
             this.clearBtn.Size = new System.Drawing.Size(75, 33);
             this.clearBtn.TabIndex = 3;
@@ -403,53 +399,33 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Угол";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(507, 85);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 34);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Определить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click);
-            // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.label10);
-            this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Controls.Add(this.label13);
+            this.groupBox6.Controls.Add(this.posRelativeToPolygonLabel);
+            this.groupBox6.Controls.Add(this.posRelativeToSegmentLabel);
             this.groupBox6.Location = new System.Drawing.Point(620, 11);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(195, 115);
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             // 
-            // label10
+            // posRelativeToPolygonLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 18);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(95, 13);
-            this.label10.TabIndex = 21;
-            this.label10.Text = "Выбранная точка";
+            this.posRelativeToPolygonLabel.AutoSize = true;
+            this.posRelativeToPolygonLabel.Location = new System.Drawing.Point(6, 83);
+            this.posRelativeToPolygonLabel.Name = "posRelativeToPolygonLabel";
+            this.posRelativeToPolygonLabel.Size = new System.Drawing.Size(174, 13);
+            this.posRelativeToPolygonLabel.TabIndex = 24;
+            this.posRelativeToPolygonLabel.Text = "Принадлежность точки полигону";
             // 
-            // label11
+            // posRelativeToSegmentLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 83);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(143, 13);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "Принадлежность полигону";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 63);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(96, 13);
-            this.label13.TabIndex = 29;
-            this.label13.Text = "Положение точки";
+            this.posRelativeToSegmentLabel.AutoSize = true;
+            this.posRelativeToSegmentLabel.Location = new System.Drawing.Point(6, 63);
+            this.posRelativeToSegmentLabel.Name = "posRelativeToSegmentLabel";
+            this.posRelativeToSegmentLabel.Size = new System.Drawing.Size(164, 13);
+            this.posRelativeToSegmentLabel.TabIndex = 29;
+            this.posRelativeToSegmentLabel.Text = "Положение точки отн-но ребра";
             // 
             // Form1
             // 
@@ -457,8 +433,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 470);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.clearBtn);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -521,11 +495,9 @@
         private System.Windows.Forms.Button rotationBtn;
         private System.Windows.Forms.NumericUpDown angleNumUD;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label posRelativeToPolygonLabel;
+        private System.Windows.Forms.Label posRelativeToSegmentLabel;
     }
 }
 
