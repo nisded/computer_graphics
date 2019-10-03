@@ -430,6 +430,28 @@ namespace affine_transformations2D
                 i.Y = p0.Y + (t * s1.Y);
             }
             return i;
-        }     
+
+            /*PointF i = new PointF(-1, -1);
+            PointF intersection = new PointF(-1, -1);            
+            float x1 = p0.X;
+            float y1 = p0.Y;
+            float x2 = p1.X;
+            float y2 = p1.Y;
+            float x3 = p2.X;
+            float y3 = p2.Y;
+            float x4 = p3.X;
+            float y4 = p3.Y;
+
+            float denominator = (x1 - x2) * (y3 - y4) - (y1 - y2)*(x3 - x4);
+            if (denominator == 0)
+                return i;
+            intersection.X = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) / denominator;
+            intersection.Y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) / denominator;
+
+            if (on_segment(intersection, p0, p1) && on_segment(intersection, p2, p3))
+                return intersection;
+            else
+                return i;*/
+        }
     }
 }
