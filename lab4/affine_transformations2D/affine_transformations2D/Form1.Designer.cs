@@ -31,9 +31,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.polygonRB = new System.Windows.Forms.RadioButton();
+            this.clearBtn = new System.Windows.Forms.Button();
             this.segmentRB = new System.Windows.Forms.RadioButton();
             this.pointRB = new System.Windows.Forms.RadioButton();
-            this.clearBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.biasBtn = new System.Windows.Forms.Button();
             this.biasYNumUD = new System.Windows.Forms.NumericUpDown();
@@ -48,15 +48,15 @@
             this.scaleXNumUD = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.intersectionPointLabel = new System.Windows.Forms.Label();
             this.posRelativeToPolygonLabel = new System.Windows.Forms.Label();
             this.posRelativeToSegmentLabel = new System.Windows.Forms.Label();
-            this.intersectionPointLabel = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.angleNumUD = new System.Windows.Forms.NumericUpDown();
-            this.rotationBtn = new System.Windows.Forms.Button();
-            this.angle90Btn = new System.Windows.Forms.Button();
             this.rotationAroundPointCB = new System.Windows.Forms.CheckBox();
+            this.angle90Btn = new System.Windows.Forms.Button();
+            this.rotationBtn = new System.Windows.Forms.Button();
+            this.angleNumUD = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,6 +108,16 @@
             this.polygonRB.Text = "Полигон";
             this.polygonRB.UseVisualStyleBackColor = true;
             // 
+            // clearBtn
+            // 
+            this.clearBtn.Location = new System.Drawing.Point(6, 87);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(75, 33);
+            this.clearBtn.TabIndex = 3;
+            this.clearBtn.Text = "Очистить";
+            this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
+            // 
             // segmentRB
             // 
             this.segmentRB.AutoSize = true;
@@ -129,16 +139,6 @@
             this.pointRB.TabStop = true;
             this.pointRB.Text = "Точка";
             this.pointRB.UseVisualStyleBackColor = true;
-            // 
-            // clearBtn
-            // 
-            this.clearBtn.Location = new System.Drawing.Point(6, 87);
-            this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(75, 33);
-            this.clearBtn.TabIndex = 3;
-            this.clearBtn.Text = "Очистить";
-            this.clearBtn.UseVisualStyleBackColor = true;
-            this.clearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
             // groupBox2
             // 
@@ -314,6 +314,15 @@
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             // 
+            // intersectionPointLabel
+            // 
+            this.intersectionPointLabel.AutoSize = true;
+            this.intersectionPointLabel.Location = new System.Drawing.Point(6, 16);
+            this.intersectionPointLabel.Name = "intersectionPointLabel";
+            this.intersectionPointLabel.Size = new System.Drawing.Size(105, 13);
+            this.intersectionPointLabel.TabIndex = 9;
+            this.intersectionPointLabel.Text = "Точка пересечения";
+            // 
             // posRelativeToPolygonLabel
             // 
             this.posRelativeToPolygonLabel.AutoSize = true;
@@ -332,15 +341,6 @@
             this.posRelativeToSegmentLabel.TabIndex = 29;
             this.posRelativeToSegmentLabel.Text = "Положение точки отн-но ребра";
             // 
-            // intersectionPointLabel
-            // 
-            this.intersectionPointLabel.AutoSize = true;
-            this.intersectionPointLabel.Location = new System.Drawing.Point(6, 16);
-            this.intersectionPointLabel.Name = "intersectionPointLabel";
-            this.intersectionPointLabel.Size = new System.Drawing.Size(105, 13);
-            this.intersectionPointLabel.TabIndex = 9;
-            this.intersectionPointLabel.Text = "Точка пересечения";
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.rotationAroundPointCB);
@@ -355,14 +355,35 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Поворот";
             // 
-            // label1
+            // rotationAroundPointCB
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Угол";
+            this.rotationAroundPointCB.AutoSize = true;
+            this.rotationAroundPointCB.Location = new System.Drawing.Point(24, 56);
+            this.rotationAroundPointCB.Name = "rotationAroundPointCB";
+            this.rotationAroundPointCB.Size = new System.Drawing.Size(92, 17);
+            this.rotationAroundPointCB.TabIndex = 6;
+            this.rotationAroundPointCB.Text = "Вокруг точки";
+            this.rotationAroundPointCB.UseVisualStyleBackColor = true;
+            // 
+            // angle90Btn
+            // 
+            this.angle90Btn.Location = new System.Drawing.Point(105, 21);
+            this.angle90Btn.Name = "angle90Btn";
+            this.angle90Btn.Size = new System.Drawing.Size(31, 23);
+            this.angle90Btn.TabIndex = 1;
+            this.angle90Btn.Text = "90";
+            this.angle90Btn.UseVisualStyleBackColor = true;
+            this.angle90Btn.Click += new System.EventHandler(this.Angle90_Click);
+            // 
+            // rotationBtn
+            // 
+            this.rotationBtn.Location = new System.Drawing.Point(24, 86);
+            this.rotationBtn.Name = "rotationBtn";
+            this.rotationBtn.Size = new System.Drawing.Size(100, 34);
+            this.rotationBtn.TabIndex = 5;
+            this.rotationBtn.Text = "Применить";
+            this.rotationBtn.UseVisualStyleBackColor = true;
+            this.rotationBtn.Click += new System.EventHandler(this.RotationBtn_Click);
             // 
             // angleNumUD
             // 
@@ -375,36 +396,20 @@
             this.angleNumUD.Name = "angleNumUD";
             this.angleNumUD.Size = new System.Drawing.Size(49, 20);
             this.angleNumUD.TabIndex = 0;
+            this.angleNumUD.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             // 
-            // rotationBtn
+            // label1
             // 
-            this.rotationBtn.Location = new System.Drawing.Point(24, 86);
-            this.rotationBtn.Name = "rotationBtn";
-            this.rotationBtn.Size = new System.Drawing.Size(100, 34);
-            this.rotationBtn.TabIndex = 5;
-            this.rotationBtn.Text = "Применить";
-            this.rotationBtn.UseVisualStyleBackColor = true;
-            this.rotationBtn.Click += new System.EventHandler(this.RotationBtn_Click);
-            // 
-            // angle90Btn
-            // 
-            this.angle90Btn.Location = new System.Drawing.Point(105, 21);
-            this.angle90Btn.Name = "angle90Btn";
-            this.angle90Btn.Size = new System.Drawing.Size(31, 23);
-            this.angle90Btn.TabIndex = 1;
-            this.angle90Btn.Text = "90";
-            this.angle90Btn.UseVisualStyleBackColor = true;
-            this.angle90Btn.Click += new System.EventHandler(this.Angle90_Click);
-            // 
-            // rotationAroundPointCB
-            // 
-            this.rotationAroundPointCB.AutoSize = true;
-            this.rotationAroundPointCB.Location = new System.Drawing.Point(24, 56);
-            this.rotationAroundPointCB.Name = "rotationAroundPointCB";
-            this.rotationAroundPointCB.Size = new System.Drawing.Size(92, 17);
-            this.rotationAroundPointCB.TabIndex = 6;
-            this.rotationAroundPointCB.Text = "Вокруг точки";
-            this.rotationAroundPointCB.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Угол";
             // 
             // Form1
             // 

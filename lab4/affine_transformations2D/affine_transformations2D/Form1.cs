@@ -32,7 +32,7 @@ namespace affine_transformations2D
             segmentRB.Checked = true;
             startPoint = Point.Empty;
             endPoint = Point.Empty;
-            pointLocation = Point.Empty;
+            pointLocation = new Point(0, 0);
         }
 
         private void ClearBtn_Click(object sender, EventArgs e)
@@ -314,11 +314,9 @@ namespace affine_transformations2D
             if (startPoint != Point.Empty && endPoint != Point.Empty)
                 g.DrawLine(Pens.Red, startPoint, endPoint);
             //точка
-            if (pointLocation != Point.Empty)
-            {
-                g.DrawEllipse(Pens.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
-                g.FillEllipse(Brushes.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
-            }
+            g.DrawEllipse(Pens.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
+            g.FillEllipse(Brushes.Blue, pointLocation.X - 1, pointLocation.Y - 1, 3, 3);
+
             refresh_labels();
         }
 
@@ -348,7 +346,7 @@ namespace affine_transformations2D
             {
                 PointF intersection = new PointF(-1, -1);
                 int n = segments.Count - 1;
-                intersection = findIntersection(segments[n-1].leftP, segments[n-1].rightP, segments[n].leftP, segments[n].rightP);
+                intersection = find_intersection_point(segments[n-1].leftP, segments[n-1].rightP, segments[n].leftP, segments[n].rightP);
                 if (intersection.X == -1 && intersection.Y == -1)
                     intersectionPointLabel.Text = "Точка пересечения не найдена";
                 else
@@ -358,9 +356,7 @@ namespace affine_transformations2D
                     g.FillEllipse(Brushes.Green, intersection.X - 2, intersection.Y - 2, 5, 5);
                     pictureBox1.Invalidate();
                 }
-            }
-
-            
+            }          
         }
 
         // Классифицирует положение точки относительно ребра     
@@ -381,14 +377,14 @@ namespace affine_transformations2D
             do
             {
                 int next = (i + 1) % n;
-                PointF intersection = findIntersection(polygon[i], polygon[next], p, extreme);
+                PointF intersection = find_intersection_point(polygon[i], polygon[next], p, extreme);
                 if (intersection.X != -1)
                 {
                     // If the point 'p' is colinear with line segment 'i-next',
                     // then check if it lies on segment. If it lies, return true,
                     // otherwise false
                     if (orientation(polygon[i], p, polygon[next]) == 0)
-                        return onSegment(polygon[i], p, polygon[next]);
+                        return on_segment(polygon[i], p, polygon[next]);
 
                     count++;
                 }
@@ -403,12 +399,11 @@ namespace affine_transformations2D
         {
             float val = (q.Y - p.Y) * (r.X - q.X) -
                       (q.X - p.X) * (r.Y - q.Y);
-
             if (val == 0) return 0;  // colinear
             return (val > 0) ? 1 : 2; // clock or counterclock wise
         }
 
-        bool onSegment(PointF q, PointF p, PointF r)
+        bool on_segment(PointF q, PointF p, PointF r)
         {
             if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
                     q.Y <= Math.Max(p.Y, r.Y) && q.Y >= Math.Min(p.Y, r.Y))
@@ -416,7 +411,7 @@ namespace affine_transformations2D
             return false;
         }
 
-        PointF findIntersection(PointF p0, PointF p1, PointF p2, PointF p3)
+        PointF find_intersection_point(PointF p0, PointF p1, PointF p2, PointF p3)
         {
             PointF i = new PointF(-1, -1);
             PointF s1 = new PointF();
