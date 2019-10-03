@@ -19,7 +19,6 @@ namespace affine_transformations2D
         List<Segment> segments = new List<Segment>();
         List<Point> polygon = new List<Point>();
         Boolean isMouseDown = false;
-        private string mode = "";
         Point startPoint, endPoint;
         Point minPolygonCoord, maxPolygonCoord;
 
@@ -45,6 +44,7 @@ namespace affine_transformations2D
             pointLocation = Point.Empty;
             posRelativeToSegmentLabel.Text = "Положение точки отн-но ребра";
             posRelativeToPolygonLabel.Text = "Принадлежность точки полигону";
+            intersectionPointLabel.Text = "Точка пересечения";
             pictureBox1.Invalidate();
         }
 
@@ -343,6 +343,24 @@ namespace affine_transformations2D
                 else
                     posRelativeToPolygonLabel.Text = "Не принадлежит полигону";
             }
+
+            if (segments.Count > 1)
+            {
+                PointF intersection = new PointF(-1, -1);
+                int n = segments.Count - 1;
+                intersection = findIntersection(segments[n-1].leftP, segments[n-1].rightP, segments[n].leftP, segments[n].rightP);
+                if (intersection.X == -1 && intersection.Y == -1)
+                    intersectionPointLabel.Text = "Точка пересечения не найдена";
+                else
+                {
+                    intersectionPointLabel.Text = "Точка пересечения найдена";
+                    g.DrawEllipse(Pens.Green, intersection.X - 2, intersection.Y - 2, 5, 5);
+                    g.FillEllipse(Brushes.Green, intersection.X - 2, intersection.Y - 2, 5, 5);
+                    pictureBox1.Invalidate();
+                }
+            }
+
+            
         }
 
         // Классифицирует положение точки относительно ребра     
@@ -415,7 +433,6 @@ namespace affine_transformations2D
             {
                 i.X = p0.X + (t * s1.X);
                 i.Y = p0.Y + (t * s1.Y);
-
             }
             return i;
         }     
