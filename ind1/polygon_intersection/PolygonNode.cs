@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace polygon_intersection
 {
-    class PolygonNode
+    public class PolygonNode
     {
         public PointF p;
         public bool isIntersection;
-        public LinkedList<PolygonNode> otherNode;
+        public LinkedListNode<PolygonNode> intersectionInOtherPolygon;
 
         public PolygonNode(PointF p, bool isIntersection = false)
         {
