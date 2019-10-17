@@ -1,0 +1,29 @@
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe.config
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Form1.resources
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Properties.Resources.resources
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csproj.GenerateResource.Cache
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csprojResolveAssemblyReference.cache
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.pdb
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.exe
+D:\MMCS\Учеба\7 семестр\Графика\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.pdb
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe.config
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.exe
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.pdb
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.pdb
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Form1.resources
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Properties.Resources.resources
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csproj.GenerateResource.Cache
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csprojAssemblyReference.cache
+E:\Рабочий стол\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csproj.CoreCompileInputs.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe.config
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.exe
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Debug\Diamond-square.pdb
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csprojAssemblyReference.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Form1.resources
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond_square.Properties.Resources.resources
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csproj.GenerateResource.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.csproj.CoreCompileInputs.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.exe
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Debug\Diamond-square.pdb

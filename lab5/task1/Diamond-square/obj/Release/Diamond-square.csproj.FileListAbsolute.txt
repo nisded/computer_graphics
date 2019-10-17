@@ -1,0 +1,20 @@
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.exe.config
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.exe
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.pdb
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csprojAssemblyReference.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond_square.Form1.resources
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond_square.Properties.Resources.resources
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csproj.GenerateResource.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csproj.CoreCompileInputs.cache
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.exe
+D:\DeskTop\Мехмат\Лабы прошлого курса\Диме\Лабы\lab5\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.pdb
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.exe.config
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.exe
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\bin\Release\Diamond-square.pdb
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csprojAssemblyReference.cache
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond_square.Form1.resources
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond_square.Properties.Resources.resources
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csproj.GenerateResource.cache
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.csproj.CoreCompileInputs.cache
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.exe
+D:\DeskTop\Мехмат\Графика\CG-05-fractals\Diamond-square\obj\Release\Diamond-square.pdb
