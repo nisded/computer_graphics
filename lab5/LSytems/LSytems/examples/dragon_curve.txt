@@ -1,0 +1,4 @@
+X 90 DOWN
+F>F
+X>X+YF+
+Y>-FX-Y

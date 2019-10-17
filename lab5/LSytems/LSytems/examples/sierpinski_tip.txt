@@ -1,0 +1,4 @@
+YF 60 RIGHT
+F>F
+X>YF+XF+Y
+Y>XF-YF-X
