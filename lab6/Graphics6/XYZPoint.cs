@@ -67,8 +67,8 @@ namespace Graphics6
          */
         public XYZPoint NormalizedToDisplay(int width, int height)
         {
-            var x = (X + 1) / 2 * width;
-            var y = (-Y + 1) / 2 * height;
+            var x = (X / coords[3] + 1) / 2 * width;
+            var y = (-Y / coords[3] + 1) / 2 * height;
             return new XYZPoint(x, y, Z);
         }
     }
