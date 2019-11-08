@@ -13,12 +13,8 @@ namespace RotationFigure
 
         private List<Verge> verges = new List<Verge>();
 
-        private int count_start_points;
-
         public List<XYZPoint> Points { get { return points; } }
         public List<Verge> Verges { get { return verges; } }
-
-        public int Count_start_poinits { get { return count_start_points; } }
 
         public RotationFigure(List<XYZPoint> p, List<Verge> v, int count_start_points)
         {
@@ -60,8 +56,9 @@ namespace RotationFigure
 
         public void Apply(Transform t)
         {
-            foreach (var point in Points)
-                point.Apply(t);
+			foreach (var Verge in Verges)
+				foreach (var point in Verge.Points)
+					point.Apply(t);
         }
 
         public void Draw(Graphics g, Transform projection, int width, int height)
