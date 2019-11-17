@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ComputerGraphics8
 {
     public partial class Form1 : Form
-    { 
+    {
         Primitive current_primitive;
         bool without_colors = false;
         private Camera camera;
@@ -65,7 +65,7 @@ namespace ComputerGraphics8
             {
                 case Keys.W: camera.Position *= Transformations.Translate(0.1 * camera.Forward); break;
                 case Keys.A: camera.Position *= Transformations.Translate(0.1 * camera.Left); break;
-                case Keys.S: camera.Position *= Transformations.Translate(0.1 * camera.Backward); break; 
+                case Keys.S: camera.Position *= Transformations.Translate(0.1 * camera.Backward); break;
                 case Keys.D: camera.Position *= Transformations.Translate(0.1 * camera.Right); break;
                 case Keys.Left: camera.Fi += delta; break;
                 case Keys.Right: camera.Fi -= delta; break;
@@ -123,7 +123,7 @@ namespace ComputerGraphics8
             moreThanOneObj = false;
             without_colors = false;
             objects.Clear();
-            switch(PrimitiveComboBox.SelectedItem.ToString())
+            switch (PrimitiveComboBox.SelectedItem.ToString())
             {
                 case "Тетраэдр":
                     {
@@ -190,7 +190,7 @@ namespace ComputerGraphics8
             if (current_primitive == null)
                 return;
 
-            var graphics3D = new Graphics3D(e.Graphics, camera.ViewProjection, pictureBox1.Width, pictureBox1.Height);
+            var graphics3D = new Graphics3D(e.Graphics, camera.ViewProjection, pictureBox1.Width, pictureBox1.Height, camera.Position);
 
             /*var x = new Vector(1, 0, 0);
             var y = new Vector(0, 1, 0);

@@ -14,12 +14,15 @@ namespace ComputerGraphics8
         public double Width { get; set; }
         public double Height { get; set; }
 
-        public Graphics3D(Graphics graphics, Matrix transformation, double width, double height)
+        public Vector CamPosition;
+
+        public Graphics3D(Graphics graphics, Matrix transformation, double width, double height, Vector pos)
         {
             this.graphics = graphics;
             Transformation = transformation;
             Width = width;
             Height = height;
+            CamPosition = pos;
 
             ColorBuffer = new Bitmap((int)Math.Ceiling(Width), (int)Math.Ceiling(Height));
             ZBuffer = new double[(int)Math.Ceiling(Width), (int)Math.Ceiling(Height)];

@@ -146,8 +146,8 @@ namespace ComputerGraphics8
                     nj = -nj;
                     nk = -nk;
                 }
-
-                if (ni * 1 + nj * 1 + nk * 1 > 0)
+            
+                if (ni * (-graphics.CamPosition.X) + nj * (-graphics.CamPosition.Y) + nk * (-graphics.CamPosition.Z) + ni * p1.X + nj * p1.Y + nk * p1.Z < 0)
                 {
                     graphics.DrawPoint(Vertices[verge[0]], Color.Black);
                     for (int i = 1; i < verge.Length; ++i)
