@@ -12,18 +12,7 @@ namespace Texturing
 {
     public partial class Form1 : Form
     {
-        private Mesh CurrentDrawable
-        {
-            get
-            {
-                return sceneView1.Drawable;
-            }
-            set
-            {
-                sceneView1.Drawable = value;
-                sceneView1.Refresh();
-            }
-        }
+        private Mesh cur_obj;
 
         private Camera camera;
 
@@ -31,10 +20,9 @@ namespace Texturing
         {
             InitializeComponent();
             ProjectionBox.SelectedItem = ProjectionBox.Items[0];
-            CurrentDrawable = Models.Cube(0.5);
+            cur_obj = Models.Cube(0.5);
             Matrix projection = Transformations.PerspectiveProjection(-0.1, 0.1, -0.1, 0.1, 0.1, 20);
             camera = new Camera(new Vector(1, 1, 1), Math.PI / 4, -Math.Atan(1 / Math.Sqrt(3)), projection);
-            sceneView1.Camera = camera;
         }
 
         private static double DegreesToRadians(double degrees)
@@ -47,8 +35,8 @@ namespace Texturing
             double scalingX = (double)numericUpDown1.Value;
             double scalingY = (double)numericUpDown2.Value;
             double scalingZ = (double)numericUpDown3.Value;
-            CurrentDrawable.Apply(Transformations.Scale(scalingX, scalingY, scalingZ));
-            sceneView1.Refresh();
+            cur_obj.Apply(Transformations.Scale(scalingX, scalingY, scalingZ));
+            pictureBox1.Invalidate();
         }
 
         private void Rotate()
@@ -56,10 +44,10 @@ namespace Texturing
             double rotatingX = DegreesToRadians((double)numericUpDown4.Value);
             double rotatingY = DegreesToRadians((double)numericUpDown5.Value);
             double rotatingZ = DegreesToRadians((double)numericUpDown6.Value);
-            CurrentDrawable.Apply(Transformations.RotateX(rotatingX)
+            cur_obj.Apply(Transformations.RotateX(rotatingX)
                 * Transformations.RotateY(rotatingY)
                 * Transformations.RotateZ(rotatingZ));
-            sceneView1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void Translate()
@@ -67,45 +55,8 @@ namespace Texturing
             double translatingX = (double)numericUpDown7.Value;
             double translatingY = (double)numericUpDown8.Value;
             double translatingZ = (double)numericUpDown9.Value;
-            CurrentDrawable.Apply(Transformations.Translate(translatingX, translatingY, translatingZ));
-            sceneView1.Refresh();
-        }
-
-        private void SaveFile()
-        {
-            if (!(CurrentDrawable is Mesh)) return;
-            var mesh = (Mesh)CurrentDrawable;
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Object Files(*.obj)|*.obj|Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    mesh.Save(saveDialog.FileName);
-                }
-                catch
-                {
-                    DialogResult rezult = MessageBox.Show("Невозможно сохранить файл",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void LoadFile()
-        {
-            OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "Object Files(*.obj)|*.obj|Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (openDialog.ShowDialog() != DialogResult.OK)
-                return;
-            try
-            {
-                CurrentDrawable = new Mesh(openDialog.FileName);
-            }
-            catch
-            {
-                MessageBox.Show("Ошибка при чтении файла",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            cur_obj.Apply(Transformations.Translate(translatingX, translatingY, translatingZ));
+            pictureBox1.Invalidate();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -122,7 +73,8 @@ namespace Texturing
                 case Keys.Up: camera.AngleX += delta; break;
                 case Keys.Down: camera.AngleX -= delta; break;
             }
-            sceneView1.Refresh();
+            //sceneView1.Refresh();
+            pictureBox1.Invalidate();
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
@@ -134,36 +86,31 @@ namespace Texturing
                     {
                         Matrix projection = Transformations.PerspectiveProjection(-0.1, 0.1, -0.1, 0.1, 0.1, 20);
                         camera = new Camera(new Vector(1, 1, 1), Math.PI / 4, -Math.Atan(1 / Math.Sqrt(3)), projection);
-                        sceneView1.Camera = camera;
                         break;
                     }
                 case ("Ортографическая XY"):
                     {
                         camera = new Camera(new Vector(0, 0, 0), 0, 0, Transformations.OrthogonalProjection());
-                        sceneView1.Camera = camera;
                         break;
                     }
                 case ("Ортографическая XZ"):
                     {
                         camera = new Camera(new Vector(0, 0, 0), 0, 0, Transformations.RotateX(Math.PI / 2) * Transformations.OrthogonalProjection());
-                        sceneView1.Camera = camera;
                         break;
                     }
                 case ("Ортографическая YZ"):
                     {
                         camera = new Camera(new Vector(0, 0, 0), 0, 0, Transformations.RotateY(-Math.PI / 2) * Transformations.OrthogonalProjection());
-                        sceneView1.Camera = camera;
                         break;
                     }
                 default:
                     {
                         Matrix projection = Transformations.PerspectiveProjection(-0.1, 0.1, -0.1, 0.1, 0.1, 20);
                         camera = new Camera(new Vector(1, 1, 1), Math.PI / 4, -Math.Atan(1 / Math.Sqrt(3)), projection);
-                        sceneView1.Camera = camera;
                         break;
                     }
             }
-            sceneView1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void ApplyAffin_Click(object sender, EventArgs e)
@@ -171,17 +118,31 @@ namespace Texturing
             Scale();
             Rotate();
             Translate();
-            sceneView1.Refresh();
+            pictureBox1.Invalidate();
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            SaveFile();
-        }
-
-        private void LoadButton_Click(object sender, EventArgs e)
-        {
-            LoadFile();
+        private void PictureBox1_Paint(object sender, PaintEventArgs e)
+        {            
+            var graphics3D = new Graphics3D(e.Graphics, camera.ViewProjection, pictureBox1.Width, pictureBox1.Height);
+            var zero = new Vector(0, 0, 0);
+            var x = new Vector(0.8, 0, 0);
+            var y = new Vector(0, 0.8, 0);
+            var z = new Vector(0, 0, 0.8);
+            graphics3D.StartDrawing();
+            graphics3D.DrawLine(
+                new Vertex(zero, Color.Red),
+                new Vertex(x, Color.Red));
+            graphics3D.DrawPoint(new Vertex(x, Color.Red));
+            graphics3D.DrawLine(
+                new Vertex(zero, Color.Green),
+                new Vertex(y, Color.Green));
+            graphics3D.DrawPoint(new Vertex(y, Color.Green));
+            graphics3D.DrawLine(
+                new Vertex(zero, Color.Blue),
+                new Vertex(z, Color.Blue));
+            graphics3D.DrawPoint(new Vertex(z, Color.Blue));
+            cur_obj.Draw(graphics3D);
+            e.Graphics.DrawImage(graphics3D.FinishDrawing(), 0, 0);
         }
     }
 }

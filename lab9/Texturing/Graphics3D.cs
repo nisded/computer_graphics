@@ -8,7 +8,6 @@ namespace Texturing
     public class Graphics3D
     {
         public Bitmap ActiveTexture { get; set; }
-        //public bool IsActiveTexture { get; set; } = false;
 
         /*
          * Clockwise - сторона, на которой вершины идут по часовой стрелки.
@@ -25,21 +24,19 @@ namespace Texturing
 
         private BitmapData bitmapData;
 
-        private SceneView sceneView;
+        private Graphics graphics;
 
         private Matrix viewProjection;
 
-        private double Width { get { return sceneView.Width; } }
-        private double Height { get { return sceneView.Height; } }
+        private double Width; 
+        private double Height;
 
-        public Graphics3D(SceneView sceneView)
+        public Graphics3D(Graphics g, Matrix viewProjection, double w, double h)
         {
-            this.sceneView = sceneView;
-            Resize();
-        }
-
-        public void Resize()
-        {
+            graphics = g;
+            this.viewProjection = viewProjection;
+            Width = w;
+            Height = h;
             colorBuffer = new Bitmap((int)Width + 1, (int)Height + 1, PixelFormat.Format24bppRgb);
         }
 
@@ -51,7 +48,6 @@ namespace Texturing
             bitmapData = colorBuffer.LockBits(
                 new Rectangle(0, 0, colorBuffer.Width, colorBuffer.Height),
                 ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
-            viewProjection = sceneView.Camera.ViewProjection;
         }
 
         public Bitmap FinishDrawing()
@@ -277,13 +273,6 @@ namespace Texturing
             }
         }
 
-        /* Если на входе значения от 0 до 1, то на выходе тоже будут значения от 0 до 1.
-         * Используется для сложения компонентов цветов. */
-        private double NormalizedAdd(double x, double y)
-        {
-            return x + y - x * y;
-        }
-
         public void DrawTriangle(Vertex a, Vertex b, Vertex c)
         {
             a.Coordinate = SpaceToClip(a.Coordinate);
@@ -319,7 +308,7 @@ namespace Texturing
                 var v = c.Coordinate - a.Coordinate;
                 if (Face.Counterclockwise == CullFace)
                     Swap(ref u, ref v);
-                if (Vector.AngleBet(new Vector(0, 0, 1), Vector.CrossProduct(u, v)) > Math.PI / 2)
+                if (Vector.AngleBet(new Vector(0, 0, 1), Vector.CrossProduct(u, v)) > 2*Math.PI / 3)
                     return;
             }
 

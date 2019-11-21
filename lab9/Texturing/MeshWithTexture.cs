@@ -25,9 +25,7 @@ namespace Texturing
                     var b = new Vertex(Coordinates[facet[i]], uvCoordinates[facet[i]]);
                     var c = new Vertex(Coordinates[facet[i + 1]], uvCoordinates[facet[i + 1]]);
                     graphics.DrawTriangle(a, b, c);
-                }
-
-            graphics.ActiveTexture = curTexture;
+                }            
         }
     }
 }
