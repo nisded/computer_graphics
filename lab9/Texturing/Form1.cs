@@ -73,7 +73,6 @@ namespace Texturing
                 case Keys.Up: camera.AngleX += delta; break;
                 case Keys.Down: camera.AngleX -= delta; break;
             }
-            //sceneView1.Refresh();
             pictureBox1.Invalidate();
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -122,13 +121,13 @@ namespace Texturing
         }
 
         private void PictureBox1_Paint(object sender, PaintEventArgs e)
-        {            
-            var graphics3D = new Graphics3D(e.Graphics, camera.ViewProjection, pictureBox1.Width, pictureBox1.Height);
+        {
+            //e.Graphics.FillRectangle(Brushes.Black, 0, 0, pictureBox1.Width, pictureBox1.Height);
+            var graphics3D = new Graphics3D(e.Graphics, camera.ViewProjection, pictureBox1.Width, pictureBox1.Height, cur_obj.Center, camera.Position);
             var zero = new Vector(0, 0, 0);
             var x = new Vector(0.8, 0, 0);
             var y = new Vector(0, 0.8, 0);
             var z = new Vector(0, 0, 0.8);
-            graphics3D.StartDrawing();
             graphics3D.DrawLine(
                 new Vertex(zero, Color.Red),
                 new Vertex(x, Color.Red));
@@ -142,7 +141,7 @@ namespace Texturing
                 new Vertex(z, Color.Blue));
             graphics3D.DrawPoint(new Vertex(z, Color.Blue));
             cur_obj.Draw(graphics3D);
-            e.Graphics.DrawImage(graphics3D.FinishDrawing(), 0, 0);
+            e.Graphics.DrawImage(graphics3D.colorBuffer, 0, 0);
         }
     }
 }

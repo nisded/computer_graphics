@@ -17,6 +17,24 @@ namespace Texturing
             Indices = indices;
         }
 
+        public Vector Center
+        {
+            get
+            {
+                Vector center = new Vector();
+                foreach (var v in Coordinates)
+                {
+                    center.X += v.X;
+                    center.Y += v.Y;
+                    center.Z += v.Z;
+                }
+                center.X /= Coordinates.Length;
+                center.Y /= Coordinates.Length;
+                center.Z /= Coordinates.Length;
+                return center;
+            }
+        }
+
         public virtual void Apply(Matrix transformation)
         {
             for (int i = 0; i < Coordinates.Length; ++i)
