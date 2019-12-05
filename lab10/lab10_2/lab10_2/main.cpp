@@ -1,6 +1,4 @@
 #include <freeglut.h>
-#include <random>
-#include <tuple>
 
 using namespace std;
 
@@ -8,12 +6,11 @@ static int Width = 800, Height = 600;
 
 double rotate_x = 0, rotate_y = 0, rotate_z = 0;
 
-class Point2D {
-public:
-	float x;
-	float y;
-	Point2D(float xx = 0, float yy = 0) : x(xx), y(yy) {}
-};
+bool isOrthoProjection = true;
+
+int rotationMode = 0;
+
+float centerX = 1.25, centerY = 0.25, centerZ = 0.25;
 
 //Функция вызываемая при изменении размеров окна
 void Reshape(int width, int height) {
@@ -25,41 +22,94 @@ void Reshape(int width, int height) {
 void Update(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glRotatef(10, 1.0, 1.0, 0.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (isOrthoProjection) {
+		glOrtho(-2.0, 2.0, -2.0, 2.0, -2.0, 2.0);
+	}
+	else {
+		gluPerspective(100.0, Width/Height, 0.0, 500.0);
+		gluLookAt(1.0, 0.5, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);	
+	}
 
-	//first
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//transfer from the scene center
+	glTranslatef(1.0, 0.0, 0.0);
+
+	switch (rotationMode)
+	{
+	case 0:  //around center of the scene
+		glTranslatef(-centerX, -centerY, -centerZ);
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+		glTranslatef(centerX, centerY, centerZ);
+		break;
+	case 1:  //around center of the pedestal
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+		break;
+	case 2:
+		break;
+	default:
+		glTranslatef(-centerX, -centerY, -centerZ);
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+		glTranslatef(centerX, centerY, centerZ);
+		break;
+	}
+
+	if (rotationMode == 2) {
+		glPushMatrix();
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+	}
+
+	//first place
 	glColor3f(1.0, 0.8431, 0.0);
 	glutWireCube(0.5);
+	if (rotationMode == 2)
+		glPopMatrix();
 
-	//second
+	//third place
 	glColor3f(0.80, 0.49, 0.19);
 	glScalef(1.0, 0.5, 1.0);
 	glTranslatef(0.5, -0.25, 0.0);
+	if (rotationMode == 2) {
+		glPushMatrix();
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+	}
 	glutWireCube(0.5);
+	if (rotationMode == 2)
+		glPopMatrix();
 	glTranslatef(-0.5, 0.25, 0.0);
 	glScalef(1.0, 2.0, 1.0);
 
-	//third
+	//second place
 	glColor3f(0.75, 0.75, 0.75);
 	glScalef(1.0, 0.7, 1.0);
 	glTranslatef(-0.5, -0.105, 0.0);
+	if (rotationMode == 2) {
+		glPushMatrix();
+		glRotatef(rotate_x, 1.0, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 1.0, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 1.0);
+	}
 	glutWireCube(0.5);
+	if (rotationMode == 2)
+		glPopMatrix();
 	glTranslatef(0.5, 0.105, 0.0);
 	glScalef(1.0, 1.4, 1.0);
 
 	glFlush();
-	glutSwapBuffers();}
-
-void MouseHandler(int button, int state, int x, int y) {
-	if (state == GLUT_UP) {
-		switch (button) {
-		case GLUT_LEFT_BUTTON:
-			glutPostRedisplay();
-			break;
-		case GLUT_RIGHT_BUTTON:
-			break;
-		}
-	}
+	glutSwapBuffers();
 }
 
 void SpecialKeys(int key, int x, int y) {
@@ -70,6 +120,10 @@ void SpecialKeys(int key, int x, int y) {
 	case GLUT_KEY_LEFT: rotate_y -= 5; break;
 	case GLUT_KEY_PAGE_UP: rotate_z += 5; break;
 	case GLUT_KEY_PAGE_DOWN: rotate_z -= 5; break;
+	case GLUT_KEY_CTRL_R: isOrthoProjection = !isOrthoProjection; break;
+	case GLUT_KEY_F1: rotationMode = 0; rotate_x = 0; rotate_y = 0; rotate_z = 0; break; //around center of the scene
+	case GLUT_KEY_F2: rotationMode = 1; rotate_x = 0; rotate_y = 0; rotate_z = 0; break; //around center of the pedestal 
+	case GLUT_KEY_F3: rotationMode = 2; rotate_x = 0; rotate_y = 0; rotate_z = 0; break; //each cube around its axis 
 	}
 	glutPostRedisplay();
 }
@@ -78,7 +132,7 @@ void KeyboardHandler(unsigned char key, int x, int y) {
 #define ESCAPE '\033'
 	if (key == ESCAPE)
 		exit(0);
-}
+}
 
 int main(int argc, char* argv[]) {
 	//инициализировать сам glut
@@ -95,9 +149,8 @@ int main(int argc, char* argv[]) {
 	glutReshapeFunc(Reshape);
 	//укажем glut функцию, которая будет рисовать каждый кадр
 	glutDisplayFunc(Update);
-	//glutMouseFunc(MouseHandler);
 	glutKeyboardFunc(KeyboardHandler);
-	//glutSpecialFunc(SpecialKeys);
+	glutSpecialFunc(SpecialKeys);
 	//войти в главный цикл приложения
 	glutMainLoop();
 }
