@@ -28,7 +28,6 @@ void updateCamera() {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-
 void reshape(int width, int height) {
 	w = width;
 	h = height;
@@ -36,7 +35,6 @@ void reshape(int width, int height) {
 	glViewport(0, 0, w, h);
 	updateCamera();
 }
-
 
 void loadTextures() {
 	floor_texture_id = SOIL_load_OGL_texture("..\\..\\textures\\road-stone-texture.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID,
@@ -67,6 +65,7 @@ void init() {
 	glClearColor(0, 0, 0, 1);
 
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+
 	loadTextures();
 
 	const GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -80,32 +79,24 @@ void init() {
 	glLightfv(GL_LIGHT3, GL_SPECULAR, light_specular);
 	glLightfv(GL_LIGHT4, GL_DIFFUSE, light_diffuse);
 
-	glLightfv(GL_LIGHT5, GL_SPECULAR, light_specular);
-	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT6, GL_SPECULAR, light_specular);
-	glLightfv(GL_LIGHT6, GL_DIFFUSE, light_diffuse);
-
-	glLightfv(GL_LIGHT7, GL_SPECULAR, light_specular);
-	glLightfv(GL_LIGHT7, GL_DIFFUSE, light_diffuse);
-	const GLfloat direction[] = { 0.0, 0.0, -1.0 };
-	glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, direction);
-	glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, 40.0);
-	glLightf(GL_LIGHT7, GL_SPOT_EXPONENT, 0.0);
-
-
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	//glEnable(GL_LIGHT0);
 }
 
 void drawFloor() {
+	GLfloat material_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
+
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, floor_texture_id);
 
 	glBegin(GL_QUADS);
+
 	glTexCoord2f(0, 0); glNormal3f(0, 0, 1); glVertex3f(-10, -10, 0);
 	glTexCoord2f(0, 1); glNormal3f(0, 0, 1); glVertex3f(-10, 10, 0);
 	glTexCoord2f(1, 1); glNormal3f(0, 0, 1); glVertex3f(10, 10, 0);
@@ -114,7 +105,6 @@ void drawFloor() {
 
 	glDisable(GL_TEXTURE_2D);
 }
-
 
 void drawLamps() {
 	const GLfloat light_pos[] = { 0.0f, 0.0f, 4.5f, 1.0f };
@@ -296,16 +286,27 @@ void drawCar()
 	//Фары
 	glColor3f(1, 1, 1);
 	glTranslatef(3, -0.3, 1);
+
+	GLfloat light_diffuse[] = { 0.4, 0.7, 0.2 };
+
 	if (glIsEnabled(GL_LIGHT5))
-		glMaterialfv(GL_FRONT, GL_EMISSION, light);
+		glMaterialfv(GL_FRONT, GL_EMISSION, light_diffuse);
 	else
 		glMaterialfv(GL_FRONT, GL_EMISSION, no_light);
+
+	GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_spot_direction[] = { 1.0, 0.0, 0.0 };
+	glLightfv(GL_LIGHT5, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT5, GL_POSITION, light_position);
+	glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 30);
+	glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, light_spot_direction);
+	//glLightf(GL_LIGHT7, GL_SPOT_EXPONENT, 60.0);
 
 	glutSolidSphere(0.3, 5, 5);
 	glTranslatef(0, 1.7, 0);
 	glutSolidSphere(0.3, 5, 5);
 	glMaterialfv(GL_FRONT, GL_EMISSION, no_light);
-	glPopMatrix();
+	glPopMatrix();	
 }
 
 void update() {
@@ -318,8 +319,15 @@ void update() {
 	cam_y = cam_dist * std::sin(ang_vert_r) * std::sin(ang_hor_r);
 	cam_z = cam_dist * std::cos(ang_vert_r);
 
-	float pos[] = { cam_x,cam_y,cam_z,1.0 };
-	glLightfv(GL_LIGHT7, GL_POSITION, pos);
+	GLfloat light_diffuse[] = { 0.4, 0.5, 0.2 };
+
+	GLfloat light_position[] = { cam_x, cam_y, cam_z, 1.0 };
+	GLfloat light_spot_direction[] = { -cam_x, -cam_y, -cam_z };
+	glLightfv(GL_LIGHT7, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT7, GL_POSITION, light_position);
+	glLightf(GL_LIGHT7, GL_SPOT_CUTOFF, 10);
+	glLightfv(GL_LIGHT7, GL_SPOT_DIRECTION, light_spot_direction);	
+	
 	gluLookAt(cam_x, cam_y, cam_z, 0., 0., 0., 0., 0., 1.);
 	drawFloor();
 	drawLamps();
@@ -375,15 +383,9 @@ void keyboard(unsigned char key, int x, int y) {
 		break;
 	case '5':
 		if (glIsEnabled(GL_LIGHT5))
-		{
 			glDisable(GL_LIGHT5);
-			glDisable(GL_LIGHT6);
-		}
 		else
-		{
 			glEnable(GL_LIGHT5);
-			glEnable(GL_LIGHT6);
-		}
 		break;
 	default:
 		break;
