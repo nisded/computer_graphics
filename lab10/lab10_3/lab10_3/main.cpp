@@ -1,31 +1,31 @@
-п»ї#include <iostream>
+#include <iostream>
 #include <cmath>
 #include <freeglut.h>
 
 #pragma comment (lib , "freeglut.lib")
 
-//С…СЂР°РЅСЏС‚ С‚РµРєСѓС‰РёР№ СЂР°Р·РјРµСЂ СЌРєСЂР°РЅР°
+//хранят текущий размер экрана
 static int w = 0, h = 0;
-// РІРёРґРёРґ РїСЂРѕРµРєС†РёРё
+// видид проекции
 static bool p = false;
-// РЈРіР»С‹ РІСЂР°С‰РµРЅРёСЏ
+// Углы вращения
 static double rotate_x = 0;
 static double rotate_y = 0;
 static double rotate_z = 0;
 
 
-//Р¤СѓРЅРєС†РёСЏ РІС‹Р·С‹РІР°РµРјР°СЏ РїРµСЂРµРґ РІС…РѕР¶РґРµРЅРёРµРј РІ РіР»Р°РІРЅС‹Р№ С†РёРєР»
+//Функция вызываемая перед вхождением в главный цикл
 void Init(void) {
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 }
 
-//Р¤СѓРЅРєС†РёСЏ СЂРёСЃСѓРµС‚ РґРµСЂРµРІРѕ, РѕС‚СЃС‚СѓРїР°СЏ РЅР° x, y, z РѕС‚ РЅР°С‡Р°Р»Р° РєРѕРѕСЂРґРёРЅР°С‚
+//Функция рисует дерево, отступая на x, y, z от начала координат
 void drawTree(double x, double y, double z)
 {
 	glLoadIdentity();
 	glTranslated(x, y, z);
 
-	GLUquadricObj *quadratic = gluNewQuadric();
+	GLUquadricObj* quadratic = gluNewQuadric();
 	glColor3ub(101, 67, 33);
 	gluCylinder(quadratic, 0.03, 0.03, 0.15, 100, 1);
 	glTranslated(0.0, 0.0, 0.15);
@@ -39,13 +39,13 @@ void drawTree(double x, double y, double z)
 	glTranslated(-x, -y, -z);
 }
 
-//Р¤СѓРЅРєС†РёСЏ РІС‹Р·С‹РІР°РµРјР°СЏ РєР°Р¶РґС‹Р№ РєР°РґСЂ -
-// РґР»СЏ РµРіРѕ РѕС‚СЂРёСЃРѕРІРєРё, РІС‹С‡РёСЃР»РµРЅРёР№ Рё С‚. Рґ.
+//Функция вызываемая каждый кадр -
+// для его отрисовки, вычислений и т. д.
 void Update(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
+
 	drawTree(-1.0, 1.0, 0.0);
 	drawTree(1.0, -1.0, 0.0);
 	drawTree(-0.5, 1.0, 0.0);
@@ -55,7 +55,7 @@ void Update(void) {
 	drawTree(0.5, 1.0, 0.0);
 	drawTree(1.0, 0.5, 0.0);
 	drawTree(1.0, 1.0, 0.0);
-	
+
 	drawTree(-0.5, -0.5, 0.0);
 	drawTree(0.5, -0.5, 0.0);
 	drawTree(-0.5, 0.5, 0.0);
@@ -65,7 +65,7 @@ void Update(void) {
 	drawTree(0.5, 0.0, 0.0);
 	drawTree(0.0, 0.5, 0.0);
 	drawTree(0.5, 0.5, 0.0);
-	
+
 	drawTree(0.5, -1.0, 0.0);
 	drawTree(-1.0, 0.5, 0.0);
 	drawTree(0.0, -1.0, 0.0);
@@ -73,10 +73,10 @@ void Update(void) {
 	drawTree(-0.5, -1.0, 0.0);
 	drawTree(-1.0, -0.5, 0.0);
 	drawTree(-1.0, -1.0, 0.0);
-	
+
 	glFlush();
 	glutSwapBuffers();
-	
+
 	if (!p)
 	{
 		glMatrixMode(GL_PROJECTION);
@@ -96,7 +96,7 @@ void Update(void) {
 	glRotatef(rotate_z, 0.0, 0.0, 1.0);
 }
 
-//Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РєР»Р°РІРёР°С‚СѓСЂС‹
+//Функция обработки клавиатуры
 void processNormalKeys(int key, int x, int y) {
 	if (key == GLUT_KEY_LEFT) rotate_y -= 5;
 	else if (key == GLUT_KEY_RIGHT) rotate_y += 5;
@@ -122,37 +122,37 @@ void processNormalKeys(int key, int x, int y) {
 	glutPostRedisplay();
 }
 
-//Р¤СѓРЅРєС†СЏ РІС‹Р·С‹РІР°РµРјР°СЏ РїСЂРё РёР·РјРµРЅРµРЅРёРё СЂР°Р·РјРµСЂРѕРІ РѕРєРЅР°
+//Функця вызываемая при изменении размеров окна
 void Reshape(int width, int height) {
 	w = width; h = height;
 
 	glViewport(0, 0, w, h);
 }
 
-int main(int argc, char * argv[]) {
-	//РРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ СЃР°Рј glut
+int main(int argc, char* argv[]) {
+	//Инициализировать сам glut
 	glutInit(&argc, argv);
-	//РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ РѕРєРЅР°
+	//Установить начальное положение окна
 	glutInitWindowPosition(100, 100);
-	//РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РЅР°С‡Р°Р»СЊРЅС‹Рµ СЂР°Р·РјРµСЂС‹ РѕРєРЅР°
+	//Установить начальные размеры окна
 	glutInitWindowSize(600, 600);
-	//РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РѕРєРЅР° - РґРІРѕР№РЅР°СЏ Р±СѓС„С„РµСЂРёР·Р°С†РёСЏ
-	// Рё РїРѕРґРґРµСЂР¶РєР° С†РІРµС‚Р° RGBA
+	//Установить параметры окна - двойная буфферизация
+	// и поддержка цвета RGBA
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-	//РЎРѕР·РґР°С‚СЊ РѕРєРЅРѕ СЃ Р·Р°РіРѕР»РѕРІРєРѕРј OpenGL
-	glutCreateWindow("Р’С‹РІРѕРґ 3D-РѕР±СЉРµРєС‚РѕРІ");
+	//Создать окно с заголовком OpenGL
+	glutCreateWindow("Вывод 3D-объектов");
 
-	//РЈРєР°Р¶РµРј glut С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РєР°Р¶РґС‹Р№ РєР°РґСЂ
+	//Укажем glut функцию, которая будет вызываться каждый кадр
 	glutIdleFunc(Update);
-	//РЈРєР°Р¶РµРј glut С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ СЂРёСЃРѕРІР°С‚СЊ РєР°Р¶РґС‹Р№ РєР°РґСЂ
+	//Укажем glut функцию, которая будет рисовать каждый кадр
 	glutDisplayFunc(Update);
-	//РЈРєР°Р¶РµРј glut С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РїСЂРё
-	// РёР·РјРµРЅРµРЅРёРё СЂР°Р·РјРµСЂР° РѕРєРЅР° РїСЂРёР»РѕР¶РµРЅРёСЏ
+	//Укажем glut функцию, которая будет вызываться при
+	// изменении размера окна приложения
 	glutReshapeFunc(Reshape);
-	// Р¤СѓРЅРєС†РёСЏ РѕР±СЂР°Р±РѕС‚РєРё РєР»Р°РІРёС€ РѕРєРЅР°
+	// Функция обработки клавиш окна
 	glutSpecialFunc(processNormalKeys);
 	Init();
-	//Р’РѕР№С‚Рё РІ РіР»Р°РІРЅС‹Р№ С†РёРєР» РїСЂРёР»РѕР¶РµРЅРёСЏ
+	//Войти в главный цикл приложения
 	glutMainLoop();
 	return 0;
 }
