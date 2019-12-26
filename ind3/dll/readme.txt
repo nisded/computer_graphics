@@ -1,0 +1,1 @@
+положить файлы в Windows/System
